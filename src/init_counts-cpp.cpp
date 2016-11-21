@@ -2,8 +2,6 @@
 #include "pos3d.h"
 using namespace Rcpp;
 
-//[[Rcpp::depends(PerspectiveTopicModel)]]
-
 //[[Rcpp::export]]
 List init_count_cpp(DataFrame state, List constants) {
   // Define constants
