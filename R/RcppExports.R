@@ -5,11 +5,43 @@ init_count_cpp <- function(state, constants) {
     .Call('PerspectiveTopicModel_init_count_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
 }
 
+#' @title
+#' pos3d
+#' @description
+#' Access positions in an vector representation of a 3D array
+#'
+#' @param x index 1
+#' @param y index 2
+#' @param z index 3
+#' @param dims integer vector of size 3 defining the array
+#'
+pos3d <- function(x, y, z, dims) {
+    .Call('PerspectiveTopicModel_pos3d', PACKAGE = 'PerspectiveTopicModel', x, y, z, dims)
+}
+
+#' @title
+#' rcategorical
+#' @description
+#' Sample a categorical variable from an unnormalized proportion
+#'
+#' @param p a vector of (possoble unnormalized) probabilities to sample from
+#'
+rcategorical <- function(p) {
+    .Call('PerspectiveTopicModel_rcategorical', PACKAGE = 'PerspectiveTopicModel', p)
+}
+
+#' @title
+#' C++ Perspective sampler
+#'
+#' @description
+#' Access positions in an vector representation of a 3D array
+#'
+#' @param state a perspective model state file
+#' @param count_matrices A list of count matrices
+#' @param priors A list of priors
+#' @param constants A list of constants
+#'
 per_sampler_cpp <- function(state, count_matrices, priors, constants) {
     .Call('PerspectiveTopicModel_per_sampler_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
-# Register entry points for exported C++ functions
-methods::setLoadAction(function(ns) {
-    .Call('PerspectiveTopicModel_RcppExport_registerCCallable', PACKAGE = 'PerspectiveTopicModel')
-})

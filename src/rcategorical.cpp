@@ -3,11 +3,11 @@ using namespace Rcpp;
 //' @title
 //' rcategorical
 //' @description
-//' Sample a categorical variable from
+//' Sample a categorical variable from an unnormalized proportion
 //'
-//' @param p a vector of (pssoble unnormalized) probabilities.
+//' @param p a vector of (possoble unnormalized) probabilities to sample from
 //'
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::export]]
 int rcategorical(NumericVector p){
   int K = p.length();
   double cumsum = 0;
@@ -30,20 +30,3 @@ int rcategorical(NumericVector p){
   return x + 1;
 }
 
-
-/*** R
-set.seed(4711)
-u_prob <- c(0.7, 1.7, 1)
-prob <- u_prob / sum(u_prob)
-count <- integer(3)
-n <- 10000
-for(i in 1:n){
-    x <- rcategorical(c(0.7, 1.7, 1))
-    count[x] <- count[x] + 1
-}
-
-stopifnot(sum(count) == n)
-
-stopifnot(chisq.test(count, p = prob)$p.value > 0.001)
-
-*/
