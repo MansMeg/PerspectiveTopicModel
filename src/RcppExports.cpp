@@ -17,6 +17,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// init_count2_cpp
+List init_count2_cpp(DataFrame state, List constants);
+RcppExport SEXP PerspectiveTopicModel_init_count2_cpp(SEXP stateSEXP, SEXP constantsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DataFrame >::type state(stateSEXP);
+    Rcpp::traits::input_parameter< List >::type constants(constantsSEXP);
+    rcpp_result_gen = Rcpp::wrap(init_count2_cpp(state, constants));
+    return rcpp_result_gen;
+END_RCPP
+}
 // pos3d
 int pos3d(int x, int y, int z, IntegerVector dims);
 RcppExport SEXP PerspectiveTopicModel_pos3d(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP dimsSEXP) {

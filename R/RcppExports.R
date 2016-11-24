@@ -5,6 +5,10 @@ init_count_cpp <- function(state, constants) {
     .Call('PerspectiveTopicModel_init_count_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
 }
 
+init_count2_cpp <- function(state, constants) {
+    .Call('PerspectiveTopicModel_init_count2_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
+}
+
 #' @title
 #' pos3d
 #' @description
