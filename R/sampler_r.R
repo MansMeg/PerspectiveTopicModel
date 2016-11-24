@@ -1,7 +1,6 @@
 #' Perspective sampler (implemented in R as a cross-check)
 #'
-#' @param state a perspective topic model state file
-#' @param count a list of count matrices and arrays n_dk, n_vkpx, n_kpx
+#' @rdname per_sampler_cpp
 #'
 #' @keywords Internal
 per_sampler_r <- function(state, count_matrices, priors, constants){
