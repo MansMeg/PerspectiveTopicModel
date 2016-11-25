@@ -67,29 +67,28 @@ test_that("sampler_cpp2", {
     state_it1_cpp <- PerspectiveTopicModel:::per_sampler2_cpp(state = state_df, count_matrices = icrcpp2, priors = priors, constants = constants)
   )
 
-  icrcpp_it1 <- PerspectiveTopicModel:::init_count_cpp(state_it1_cpp[[1]], constants)
-  icrcpp_it1[["n_kp"]] <- apply(icrcpp_it1$n_kpx, MARGIN=c(1, 2), sum)
-  icrcpp_it1[["n_kx"]] <- apply(icrcpp_it1$n_kpx, MARGIN=c(1, 3), sum)
+  icrcpp_it1 <- PerspectiveTopicModel:::init_count2_cpp(state_it1_cpp[[1]], constants)
+  icrcpp_it1[["n_pk"]] <- t(apply(icrcpp_it1$n_kpx, MARGIN=c(1, 2), sum))
+  icrcpp_it1[["n_xk"]] <- t(apply(icrcpp_it1$n_kpx, MARGIN=c(1, 3), sum))
 
   expect_silent(
-    stopifnot(sum(state_it1_cpp$count_matrices$n_dk) == sum(state_it1_cpp$count_matrices$n_vkpx),
-              sum(state_it1_cpp$count_matrices$n_vkpx) == sum(state_it1_cpp$count_matrices$n_kpx))
+    stopifnot(sum(state_it1_cpp$count_matrices$n_dk) == sum(state_it1_cpp$count_matrices$n_kvpx),
+              sum(state_it1_cpp$count_matrices$n_kpx) == sum(state_it1_cpp$count_matrices$n_kvpx))
   )
 
   expect_silent(
     stopifnot(all(icrcpp_it1$n_dk == state_it1_cpp$count_matrices$n_dk),
-              all(icrcpp_it1$n_vkpx == state_it1_cpp$count_matrices$n_vkpx),
+              all(icrcpp_it1$n_kvpx == state_it1_cpp$count_matrices$n_kvpx),
               all(icrcpp_it1$n_kpx == state_it1_cpp$count_matrices$n_kpx),
-              all(icrcpp_it1$n_kp == state_it1_cpp$count_matrices$n_kp),
-              all(icrcpp_it1$n_kx == state_it1_cpp$count_matrices$n_kx))
+              all(icrcpp_it1$n_pk == state_it1_cpp$count_matrices$n_pk),
+              all(icrcpp_it1$n_xk == state_it1_cpp$count_matrices$n_xk))
   )
 
   expect_silent(
     stopifnot(all(state_it1_r$state == state_it1_cpp$state),
               all(state_it1_r$count_matrices$n_dk == state_it1_cpp$count_matrices$n_dk),
-              all(state_it1_r$count_matrices$n_vkpx == state_it1_cpp$count_matrices$n_vkpx),
               all(state_it1_r$count_matrices$n_kpx == state_it1_cpp$count_matrices$n_kpx),
-              all(state_it1_r$count_matrices$n_kp == state_it1_cpp$count_matrices$n_kp),
-              all(state_it1_r$count_matrices$n_kx == state_it1_cpp$count_matrices$n_kx))
+              all(state_it1_r$count_matrices$n_kp == t(state_it1_cpp$count_matrices$n_pk)),
+              all(state_it1_r$count_matrices$n_kx == t(state_it1_cpp$count_matrices$n_xk)))
   )
 })
