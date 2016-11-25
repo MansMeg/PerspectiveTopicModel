@@ -49,3 +49,18 @@ per_sampler_cpp <- function(state, count_matrices, priors, constants) {
     .Call('PerspectiveTopicModel_per_sampler_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
+#' @title
+#' C++ Perspective sampler
+#'
+#' @description
+#' Access positions in an vector representation of a 3D array
+#'
+#' @param state a perspective model state file
+#' @param count_matrices A list of count matrices
+#' @param priors A list of priors
+#' @param constants A list of constants
+#'
+per_sampler2_cpp <- function(state, count_matrices, priors, constants) {
+    .Call('PerspectiveTopicModel_per_sampler2_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
+}
+

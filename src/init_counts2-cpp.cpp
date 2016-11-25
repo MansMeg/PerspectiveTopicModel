@@ -2,6 +2,8 @@
 #include "pos3d.h"
 using namespace Rcpp;
 
+// Cache optimized storage
+
 //[[Rcpp::export]]
 List init_count2_cpp(DataFrame state, List constants) {
   // Define constants
