@@ -8,18 +8,27 @@
 perspective_sampler <-function(state, priors, params){
   # Assertions
   checkmate::assert_subset(c("doc", "type", "topic", "party", "perspective"), names(state))
+  checkmate::assert_integer(state$doc)
+  checkmate::assert_factor(state$type)
+  checkmate::assert_integer(state$topic)
+  checkmate::assert_factor(state$party)
   checkmate::assert_integer(state$perspective)
+  
   checkmate::assert_subset(c("alpha", "betax0", "betax1", "alpha_pi", "beta_pi" ), names(priors))
 
   checkmate::assert_integerish(params$start_iter, lower = 2L)
   checkmate::assert_integerish(params$gibbs_iter, lower = params$start_iter)
 
   # Create constants
-  constants <- list(D = length(unique(state$doc)),
+  constants <- list(D = max(state$doc),
                     V = length(unique(state$type)),
-                    K = length(unique(state$topic)),
+                    K = max(state$topic),
                     P = length(unique(state$party)),
                     N = nrow(state))
+  
+  # Warnings
+  if(max(state$doc) != length(unique(state$doc))) warning("Missing doc ids")
+  if(max(state$topic) != length(unique(state$topic))) warning("Missing doc ids")
 
   # Remove factors
   state$type <- as.integer(state$type)
