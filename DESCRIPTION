@@ -2,7 +2,6 @@ Package: PerspectiveTopicModel
 Type: Package
 Title: Samples a perspetice topic model
 Version: 0.1.0
-Date: 2017-01-02
 Author: Mans Magnusson
 Maintainer: mans Magnusson <mans.magnusson@liu.se>
 Description: Samples different perspective topic models
@@ -10,7 +9,8 @@ License: BSD_2_clause + file LICENSE
 LazyData: TRUE
 Imports:
     Rcpp (>= 0.12.8),
-    checkmate
+    checkmate,
+    stringr
 LinkingTo: Rcpp
 RoxygenNote: 5.0.1
 Suggests: testthat

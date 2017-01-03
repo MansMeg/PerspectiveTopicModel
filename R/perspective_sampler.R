@@ -13,7 +13,7 @@ perspective_sampler <-function(state, priors, params){
   checkmate::assert_integer(state$topic)
   checkmate::assert_factor(state$party)
   checkmate::assert_integer(state$perspective)
-  
+
   checkmate::assert_subset(c("alpha", "betax0", "betax1", "alpha_pi", "beta_pi" ), names(priors))
 
   checkmate::assert_integerish(params$start_iter, lower = 2L)
@@ -25,7 +25,7 @@ perspective_sampler <-function(state, priors, params){
                     K = max(state$topic),
                     P = length(unique(state$party)),
                     N = nrow(state))
-  
+
   # Warnings
   if(max(state$doc) != length(unique(state$doc))) warning("Missing doc ids")
   if(max(state$topic) != length(unique(state$topic))) warning("Missing doc ids")
@@ -56,7 +56,7 @@ perspective_sampler <-function(state, priors, params){
     verbose <- params$verbose
   }
   # Progressbar
-  if(verbose) pb <- txtProgressBar(min = 1, max = params$gibbs_iter, initial = params$start_iter, style = 3)
+  if(verbose) pb <- utils::txtProgressBar(min = 1, max = params$gibbs_iter, initial = params$start_iter, style = 3)
 
 
   ### Sampler
@@ -64,7 +64,7 @@ perspective_sampler <-function(state, priors, params){
 
   for (step in params$start_iter:params$gibbs_iter){
     results <- per_sampler_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
-    if(verbose) setTxtProgressBar(pb, step)
+    if(verbose) utils::setTxtProgressBar(pb, step)
     if(step %% params$save_state_every == 0) save(results, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
   }
   results

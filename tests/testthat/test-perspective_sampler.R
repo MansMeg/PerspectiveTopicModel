@@ -8,9 +8,9 @@ test_that("perspective_sampler", {
   K <- 10
   P <- 3
   state_df <- data.frame(doc = sample(1:D, size = N, replace = TRUE),
-                         type = sample(1:V, size = N, replace = TRUE),
+                         type = factor(sample(1:V, size = N, replace = TRUE)),
                          topic = sample(1:K, size = N, replace = TRUE),
-                         party = sample(1:P, size = N, replace = TRUE),
+                         party = factor(sample(1:P, size = N, replace = TRUE)),
                          perspective = sample(0:1, size = N, replace = TRUE))
 
   constants <- list(D = length(unique(state_df$doc)),
@@ -35,6 +35,8 @@ test_that("perspective_sampler", {
 
   params <- list(gibbs_iter = 5L, start_iter = 2L, save_state_every = 10000)
 
-  capture_output(res <- perspective_sampler(state_df, priors = priors, params))
+  expect_silent(res <- perspective_sampler(state_df, priors = priors, params))
 
+  params$verbose <- TRUE
+  expect_output(res <- perspective_sampler(state_df, priors = priors, params))
 })
