@@ -12,6 +12,7 @@ perspective_sampler <-function(state, priors, params){
   checkmate::assert_subset(c("alpha", "betax0", "betax1", "alpha_pi", "beta_pi" ), names(priors))
 
   checkmate::assert_integerish(params$start_iter, lower = 2L)
+  checkmate::assert_integerish(params$gibbs_iter, lower = params$start_iter)
 
   # Create constants
   constants <- list(D = length(unique(state$doc)),
@@ -34,14 +35,28 @@ perspective_sampler <-function(state, priors, params){
   # Sanity checks
   stopifnot(all(unlist(lapply(count_matrices, sum)) == constants$N))
 
+  # Handle defaults
+  if(is.null(params$state_file_name)) {
+    state_file_name <- "perspective"
+  } else {
+    state_file_name <- params$state_file_name
+  }
+  if(is.null(params$verbose)) {
+    verbose <- FALSE
+  } else {
+    verbose <- params$verbose
+  }
+  # Progressbar
+  if(verbose) pb <- txtProgressBar(min = 1, max = params$gibbs_iter, initial = params$start_iter, style = 3)
+
+
   ### Sampler
   results <- per_sampler_cpp(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
+
   for (step in params$start_iter:params$gibbs_iter){
-    print(step)
     results <- per_sampler_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
-    if(step %% params$save_state_every == 0) save(results, file = paste0(params$state_file_name, "_it", step, ".Rdata"))
+    if(verbose) setTxtProgressBar(pb, step)
+    if(step %% params$save_state_every == 0) save(results, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
   }
   results
 }
-
-
