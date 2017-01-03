@@ -1,5 +1,7 @@
-# PerspectiveTopicModel
+[![Build Status](https://travis-ci.org/MansMeg/PerspectiveTopicModel.svg?branch=master)](https://travis-ci.org/MansMeg/PerspectiveTopicModel)
 
+
+# PerspectiveTopicModel
 
 ## Example run
 
