@@ -21,14 +21,16 @@ perspective_sampler <-function(state, priors, params){
 
   # Create constants
   constants <- list(D = max(state$doc),
-                    V = length(unique(state$type)),
+                    V = length(levels(state$type)),
                     K = max(state$topic),
-                    P = length(unique(state$party)),
+                    P = length(levels(state$party)),
                     N = nrow(state))
 
   # Warnings
   if(max(state$doc) != length(unique(state$doc))) warning("Missing doc ids")
   if(max(state$topic) != length(unique(state$topic))) warning("Missing doc ids")
+  if(length(unique(state$party)) != length(levels(state$party))) warning("Missing parties")
+  if(length(unique(state$type)) != length(levels(state$type))) warning("Missing parties")
 
   # Remove factors
   state$type <- as.integer(state$type)
