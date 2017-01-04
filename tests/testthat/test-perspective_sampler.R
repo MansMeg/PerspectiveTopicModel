@@ -33,7 +33,7 @@ test_that("perspective_sampler", {
                  alpha_pi = 0.1,
                  beta_pi = 0.1)
 
-  params <- list(gibbs_iter = 5L, start_iter = 2L, save_state_every = 10000)
+  params <- parameters(K = 5, gibbs_iter = 5L, save_state_every = 10, seed = 4711)
 
   expect_silent(res <- perspective_sampler(state_df, priors = priors, params))
 
