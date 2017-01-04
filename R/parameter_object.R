@@ -30,7 +30,8 @@ parameters <- function(x = NULL,
                     gibbs_iter = gibbs_iter,
                     save_state_every = save_state_every,
                     state_path = state_path,
-                    seed = seed)
+                    seed = seed,
+                    verbose = verbose)
 
   if(!is.null(x)){
     for(name in names(x)){
@@ -40,9 +41,9 @@ parameters <- function(x = NULL,
 
   # Assertions
   checkmate::assert_integerish(params_obj$K, lower = 2L)
-  checkmate::assert_integerish(params_obj$gibbs_iter, lower = params$start_iter)
-  checkmate::assert_integerish(params_obj$start_iter, lower = 2L, upper = params$gibbs_iter)
-  checkmate::assert_integerish(params_obj$save_state_every, lower = 1L, params$gibbs_iter, null.ok = TRUE)
+  checkmate::assert_integerish(params_obj$gibbs_iter, lower = params_obj$start_iter)
+  checkmate::assert_integerish(params_obj$start_iter, lower = 2L, upper = params_obj$gibbs_iter)
+  checkmate::assert_integerish(params_obj$save_state_every, lower = 1L, params_obj$gibbs_iter, null.ok = TRUE)
   checkmate::assert_path_for_output(params_obj$state_path)
   checkmate::assert_integerish(params_obj$seed, lower = 1L)
   checkmate::assert_flag(params_obj$verbose)
