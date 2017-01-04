@@ -5,11 +5,25 @@
 \title{Constructor for parameter object}
 \usage{
 parameters(x = NULL, K = 10, start_iter = 2L, gibbs_iter = 10L,
-  save_state_every = 10L, state_path = "perspective_",
-  seed = as.integer(Sys.time()))
+  save_state_every = NULL, state_path = "perspective_",
+  seed = as.integer(Sys.time()), verbose = TRUE)
 }
 \arguments{
 \item{x}{NULL or a list with priors to set}
+
+\item{K}{The number of topics.}
+
+\item{start_iter}{Start iteration number.}
+
+\item{gibbs_iter}{The number of Gibbs iterations}
+
+\item{save_state_every}{Store the state file every X iteration.}
+
+\item{state_path}{Where to store the state file.}
+
+\item{seed}{The seed to use for the random draws}
+
+\item{verbose}{Should the sampler be verbose?}
 }
 \value{
 A \code{parameter} object

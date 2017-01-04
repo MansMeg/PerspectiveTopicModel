@@ -1,6 +1,13 @@
 #' Constructor for parameter object
 #'
 #' @param x NULL or a list with priors to set
+#' @param K The number of topics.
+#' @param start_iter Start iteration number.
+#' @param gibbs_iter The number of Gibbs iterations
+#' @param save_state_every Store the state file every X iteration.
+#' @param state_path Where to store the state file.
+#' @param seed The seed to use for the random draws
+#' @param verbose Should the sampler be verbose?
 #'
 #' @return A \code{parameter} object
 #'
