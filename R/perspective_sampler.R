@@ -45,10 +45,10 @@ perspective_sampler <-function(state, priors, params){
   stopifnot(all(unlist(lapply(count_matrices, sum)) == constants$N))
 
   # Handle defaults
-  if(is.null(params$state_file_name)) {
+  if(is.null(params$state_path)) {
     state_file_name <- "perspective"
   } else {
-    state_file_name <- params$state_file_name
+    state_file_name <- params$state_path
   }
   if(is.null(params$verbose)) {
     verbose <- FALSE
