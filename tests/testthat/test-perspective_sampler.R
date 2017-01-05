@@ -27,7 +27,7 @@ test_that("perspective_sampler", {
               constants$N == N)
   )
 
-  priors <- list(alpha = 0.1,
+  priors <- priors(alpha = 0.1,
                  betax0 = 0.01,
                  betax1 = 0.01,
                  alpha_pi = 0.1,
