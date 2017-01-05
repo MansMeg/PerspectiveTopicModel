@@ -3,5 +3,7 @@
 export(parameters)
 export(perspective_sampler)
 export(priors)
+export(read_mallet_statefile)
+export(write_mallet_statefile)
 importFrom(Rcpp,evalCpp)
 useDynLib(PerspectiveTopicModel)
