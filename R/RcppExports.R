@@ -37,9 +37,6 @@ rcategorical <- function(p) {
 #' @title
 #' C++ Perspective sampler
 #'
-#' @description
-#' Access positions in an vector representation of a 3D array
-#'
 #' @param state a perspective model state file
 #' @param count_matrices A list of count matrices
 #' @param priors A list of priors
@@ -50,10 +47,7 @@ per_sampler_cpp <- function(state, count_matrices, priors, constants) {
 }
 
 #' @title
-#' C++ Perspective sampler
-#'
-#' @description
-#' Access positions in an vector representation of a 3D array
+#' C++ Cache optimized Perspective sampler
 #'
 #' @param state a perspective model state file
 #' @param count_matrices A list of count matrices

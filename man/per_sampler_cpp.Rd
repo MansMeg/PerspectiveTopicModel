@@ -19,8 +19,6 @@ per_sampler_r(state, count_matrices, priors, constants)
 \item{constants}{A list of constants}
 }
 \description{
-Access positions in an vector representation of a 3D array
-
 Perspective sampler (implemented in R as a cross-check)
 }
 \keyword{Internal}

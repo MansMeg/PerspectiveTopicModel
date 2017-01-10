@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{per_sampler2_cpp}
 \alias{per_sampler2_cpp}
-\title{C++ Perspective sampler}
+\title{C++ Cache optimized Perspective sampler}
 \usage{
 per_sampler2_cpp(state, count_matrices, priors, constants)
 }
@@ -14,8 +14,5 @@ per_sampler2_cpp(state, count_matrices, priors, constants)
 \item{priors}{A list of priors}
 
 \item{constants}{A list of constants}
-}
-\description{
-Access positions in an vector representation of a 3D array
 }
 
