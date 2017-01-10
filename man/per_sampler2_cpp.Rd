@@ -15,4 +15,7 @@ per_sampler2_cpp(state, count_matrices, priors, constants)
 
 \item{constants}{A list of constants}
 }
+\description{
+C++ Cache optimized Perspective sampler
+}
 
