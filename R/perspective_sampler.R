@@ -35,7 +35,7 @@ perspective_sampler <-function(state, priors, params){
   state$party <- as.integer(state$party)
 
   # Init count matrices
-  count_matrices <- init_count_cpp(state, constants)
+  count_matrices <- init_count2_cpp(state, constants)
 
   # Calculate extra count matrices
   count_matrices[["n_kp"]] <- apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum)
@@ -63,7 +63,7 @@ perspective_sampler <-function(state, priors, params){
   results <- per_sampler_cpp(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
 
   for (step in params$start_iter:params$gibbs_iter){
-    results <- per_sampler_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
+    results <- per_sampler2_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
     if(verbose) utils::setTxtProgressBar(pb, step)
     if(!is.null(params$save_state_every) && step %% params$save_state_every == 0) save(results, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
   }
