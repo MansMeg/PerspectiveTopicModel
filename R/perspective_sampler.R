@@ -60,7 +60,7 @@ perspective_sampler <-function(state, priors, params){
 
 
   ### Sampler
-  results <- per_sampler_cpp(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
+  results <- per_sampler2_cpp(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
 
   for (step in params$start_iter:params$gibbs_iter){
     results <- per_sampler2_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
