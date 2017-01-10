@@ -38,8 +38,8 @@ perspective_sampler <-function(state, priors, params){
   count_matrices <- init_count2_cpp(state, constants)
 
   # Calculate extra count matrices
-  count_matrices[["n_kp"]] <- apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum)
-  count_matrices[["n_kx"]] <- apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum)
+  count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
+  count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
   # Sanity checks
   stopifnot(all(unlist(lapply(count_matrices, sum)) == constants$N))
@@ -57,7 +57,6 @@ perspective_sampler <-function(state, priors, params){
   }
   # Progressbar
   if(verbose) pb <- utils::txtProgressBar(min = 1, max = params$gibbs_iter, initial = params$start_iter, style = 3)
-
 
   ### Sampler
   results <- per_sampler2_cpp(state = state, count_matrices = count_matrices, priors = priors, constants = constants)

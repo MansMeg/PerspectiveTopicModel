@@ -7,9 +7,6 @@ using namespace Rcpp;
 //' @title
 //' C++ Perspective sampler
 //'
-//' @description
-//' Access positions in an vector representation of a 3D array
-//'
 //' @param state a perspective model state file
 //' @param count_matrices A list of count matrices
 //' @param priors A list of priors
