@@ -7,6 +7,9 @@ using namespace Rcpp;
 //' @title
 //' C++ Cache optimized Perspective sampler
 //'
+//' @description
+//' C++ Cache optimized Perspective sampler
+//'
 //' @param state a perspective model state file
 //' @param count_matrices A list of count matrices
 //' @param priors A list of priors
