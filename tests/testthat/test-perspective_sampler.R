@@ -35,6 +35,7 @@ test_that("perspective_sampler", {
 
   params <- parameters(K = 5, gibbs_iter = 5L, save_state_every = 10, seed = 4711)
 
+  params$verbose <- FALSE
   expect_silent(res <- perspective_sampler(state_df, priors = priors, params))
 
   params$verbose <- TRUE
