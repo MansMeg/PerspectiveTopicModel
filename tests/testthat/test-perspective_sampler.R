@@ -55,17 +55,20 @@ test_that("perspective_sampler prior on Phi", {
                          topic = sample(1:K, size = N, replace = TRUE),
                          party = factor(sample(1:P, size = N, replace = TRUE)),
                          perspective = sample(0:1, size = N, replace = TRUE))
+  state_df$type[nrow(state_df)] <- 2
 
   priors <- priors(alpha = 0.1,
                    betax0 = 0.01,
                    betax1 = 0.01,
                    alpha_pi = 0.1,
                    beta_pi = 0.1,
-                   non_zero_type_topics = list("2" = c(1,2), "4" = 3))
+                   non_zero_type_topics = list("2" = c(1,2), "4" = 3, "7" = c(1)))
 
   params <- parameters(K = 10, gibbs_iter = 5L, save_state_every = 10, seed = 4711)
 
   params$verbose <- FALSE
   expect_silent(res <- perspective_sampler(state = state_df, priors = priors, params))
 
+  expect_true(all(res$state$topic[res$state$type == 2] %in% c(1,2)))
+  expect_true(all(res$state$topic[res$state$type == 4] == 3))
 })

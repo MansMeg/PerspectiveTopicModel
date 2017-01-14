@@ -89,10 +89,14 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
       // Set non-prior values to zero
       if(prior_types[v]){
         if(!prior_types_indicator_v[j]){
-          //* Handling of prior on Phi
+          // Handling of prior on Phi
           Rcout << "Type: " << v + 1 << " Topic: " << j + 1 << " Logical vector[j]: " << prior_types_indicator_v[j] <<  std::endl;
           // If set to zero -> skip to next j
+          u_prob[j] = 0.0;
+          u_prob[j + K] = 0.0;
+          continue;
         }
+        Rcout << " ping " <<  std::endl;
       }
 
       // x == 0
@@ -128,7 +132,6 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
     n_kpx(pos3d(new_k, p, new_x, n_kpx_dims)) += 1;
     n_pk(p, new_k) += 1;
     n_xk(new_x, new_k) += 1;
-
   }
 
   // Return List
