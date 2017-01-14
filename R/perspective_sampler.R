@@ -17,9 +17,12 @@ perspective_sampler <-function(state, priors, params){
   checkmate::assert_class(priors, "priors")
   checkmate::assert_class(params, "parameters")
 
+  # Extract vocabulary
+  vocabulary <- levels(state$type)
+
   # Create constants
   constants <- list(D = max(state$doc),
-                    V = length(levels(state$type)),
+                    V = length(vocabulary),
                     K = max(state$topic),
                     P = length(levels(state$party)),
                     N = nrow(state))
@@ -51,6 +54,16 @@ perspective_sampler <-function(state, priors, params){
   # Calculate extra count matrices
   count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
+
+  # Prepare prior on Phi object
+  priors$tmp <-
+    list(prior_types = logical(length(vocabulary)),
+         prior_types_map = integer(length(vocabulary)))
+  for(i in seq_along(priors$non_zero_type_topics)){
+    idx <- which(vocabulary %in% names(priors$non_zero_type_topics)[i])
+    priors$tmp$prior_types[idx] <- TRUE
+    priors$tmp$prior_types_map[idx] <- i
+  }
 
   # Sanity checks
   checkmate::assert(all(unlist(lapply(count_matrices, sum)) == constants$N))
