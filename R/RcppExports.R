@@ -61,3 +61,18 @@ per_sampler2_cpp <- function(state, count_matrices, priors, constants) {
     .Call('PerspectiveTopicModel_per_sampler2_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
+#' @title
+#' C++ Cache optimized Perspective sampler with prior on Phi
+#'
+#' @description
+#' C++ Cache optimized Perspective sampler with prior on Phi
+#'
+#' @param state a perspective model state file
+#' @param count_matrices A list of count matrices
+#' @param priors A list of priors
+#' @param constants A list of constants
+#'
+per_sampler3_cpp <- function(state, count_matrices, priors, constants) {
+    .Call('PerspectiveTopicModel_per_sampler3_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
+}
+
