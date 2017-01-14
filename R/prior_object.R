@@ -6,21 +6,30 @@
 #' @param betax1 The betax1 parameter
 #' @param alpha_pi The alpha_pi parameter
 #' @param beta_pi The beta_pi parameter
+#' @param non_zero_type_topics List of priors on wordtypes. See details.
+#'
+#' @details
+#' A list of types with prior settings. Each element is a type that contains a vector of non_zero probability topics.
+#'
 #'
 #' @return A \code{priors} object
 #'
 #' @export
-priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi = 0.1, beta_pi = 0.1){
+priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi = 0.1, beta_pi = 0.1, non_zero_type_topics = NULL){
   if(!is.null(x)) {
     checkmate::assert_class(x, "list")
     checkmate::assert_subset(names(x), c("alpha", "betax0", "betax1", "alpha_pi", "beta_pi"))
+    if(!is.null(non_zero_type_topics)) {
+      checkmate::assert_class(non_zero_type_topics, "list")
+    }
   }
 
   prior_obj <- list(alpha = alpha,
                     betax0 = betax0,
                     betax1 = betax1,
                     alpha_pi = alpha_pi,
-                    beta_pi = beta_pi)
+                    beta_pi = beta_pi,
+                    non_zero_type_topics = non_zero_type_topics)
 
   if(!is.null(x)){
     for(name in names(x)){
@@ -34,6 +43,14 @@ priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi
   checkmate::assert_number(prior_obj$betax1, lower = 0.000000001)
   checkmate::assert_number(prior_obj$alpha_pi, lower = 0.000000001)
   checkmate::assert_number(prior_obj$beta_pi, lower = 0.000000001)
+  if(!is.null(prior_obj$non_zero_type_topics)) {
+    checkmate::assert_class(prior_obj$non_zero_type_topics, "list")
+    checkmate::assert_character(names(prior_obj$non_zero_type_topics),
+                                len = length(prior_obj$non_zero_type_topics))
+    for(i in seq_along(non_zero_type_topics)) {
+      checkmate::assert_integerish(non_zero_type_topics[[i]])
+    }
+  }
 
   class(prior_obj) <- c("priors", "list")
 
