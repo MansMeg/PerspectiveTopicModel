@@ -59,7 +59,7 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
   double beta_x0_sum = betax0 * V;
   double beta_x1_sum = betax1 * V;
   double n_dj_alpha, alpha_beta_pi_n_pk;
-  LogicalVector prior_types_indicator_v;
+  LogicalVector prior_types_indicator_v(K);
 
   for (int i = 0; i < N; ++i) {
     d = doc[i] - 1;
@@ -70,7 +70,7 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
     px = x * (p + 1);
     if(prior_types[v]){
       // prior_types_map is R indexed
-      LogicalVector prior_types_indicator_v = prior_types_indicator[prior_types_map[v] - 1];
+      prior_types_indicator_v = prior_types_indicator[prior_types_map[v] - 1];
       // Rcout << "Type: " << v + 1 << " Logical vector: " << prior_types_indicator_v << std::endl;
     }
 
@@ -87,13 +87,13 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
       alpha_beta_pi_n_pk = alpha_beta_pi + n_pk(p, j);
 
       // Set non-prior values to zero
-//      if(prior_types[v]){
-//        if(prior_types_indicator_v[j]){
-//        //* Handling of prior on Phi
-//          Rcout << "Type " << v + 1 << " Topic" << j + 1 << std::endl;
-//        // If set to zero -> skip to next j
-//        }
-//      }
+      if(prior_types[v]){
+        if(!prior_types_indicator_v[j]){
+          //* Handling of prior on Phi
+          Rcout << "Type: " << v + 1 << " Topic: " << j + 1 << " Logical vector[j]: " << prior_types_indicator_v[j] <<  std::endl;
+          // If set to zero -> skip to next j
+        }
+      }
 
       // x == 0
       u_prob[j] = (beta_pi + n_kpx(pos3d(j, p, 0, n_kpx_dims))) / alpha_beta_pi_n_pk;
