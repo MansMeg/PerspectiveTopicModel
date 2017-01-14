@@ -24,11 +24,19 @@ perspective_sampler <-function(state, priors, params){
                     P = length(levels(state$party)),
                     N = nrow(state))
 
+  # Assert non_zero_type_topics
+  if(!is.null(priors$non_zero_type_topics)){
+    checkmate::assert(all(names(priors$non_zero_type_topics) %in% levels(state$type)))
+    for(i in seq_along(priors$non_zero_type_topics)){
+      checkmate::assert_integerish(non_zero_type_topics, lower = 1, upper = constants$K)
+    }
+  }
+
   # Warnings
-  if(max(state$doc) != length(unique(state$doc))) warning("Missing doc ids")
-  if(max(state$topic) != length(unique(state$topic))) warning("Missing doc ids")
-  if(length(unique(state$party)) != length(levels(state$party))) warning("Missing parties")
-  if(length(unique(state$type)) != length(levels(state$type))) warning("Missing parties")
+  if(max(state$doc) != length(unique(state$doc))) warning("Missing document ids.")
+  if(max(state$topic) != length(unique(state$topic))) warning("Missing topic ids.")
+  if(length(unique(state$party)) != length(levels(state$party))) warning("Missing partiy ids.")
+  if(length(unique(state$type)) != length(levels(state$type))) warning("Missing type ids.")
 
   # Remove factors
   state$type <- as.integer(state$type)
@@ -42,7 +50,7 @@ perspective_sampler <-function(state, priors, params){
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
   # Sanity checks
-  stopifnot(all(unlist(lapply(count_matrices, sum)) == constants$N))
+  checkmate::assert(all(unlist(lapply(count_matrices, sum)) == constants$N))
 
   # Handle defaults
   if(is.null(params$state_path)) {
