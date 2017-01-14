@@ -24,18 +24,21 @@ perspective_sampler <-function(state, priors, params){
                     P = length(levels(state$party)),
                     N = nrow(state))
 
+  # Assert
+  checkmate::assert(max(state$topic) == params$K)
+
   # Assert non_zero_type_topics
   if(!is.null(priors$non_zero_type_topics)){
     checkmate::assert(all(names(priors$non_zero_type_topics) %in% levels(state$type)))
     for(i in seq_along(priors$non_zero_type_topics)){
-      checkmate::assert_integerish(non_zero_type_topics, lower = 1, upper = constants$K)
+      checkmate::assert_integerish(non_zero_type_topics[[i]], lower = 1, upper = constants$K)
     }
   }
 
   # Warnings
   if(max(state$doc) != length(unique(state$doc))) warning("Missing document ids.")
   if(max(state$topic) != length(unique(state$topic))) warning("Missing topic ids.")
-  if(length(unique(state$party)) != length(levels(state$party))) warning("Missing partiy ids.")
+  if(length(unique(state$party)) != length(levels(state$party))) warning("Missing party ids.")
   if(length(unique(state$type)) != length(levels(state$type))) warning("Missing type ids.")
 
   # Remove factors
