@@ -18,9 +18,9 @@
 priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi = 0.1, beta_pi = 0.1, non_zero_type_topics = NULL){
   if(!is.null(x)) {
     checkmate::assert_class(x, "list")
-    checkmate::assert_subset(names(x), c("alpha", "betax0", "betax1", "alpha_pi", "beta_pi"))
-    if(!is.null(non_zero_type_topics)) {
-      checkmate::assert_class(non_zero_type_topics, "list")
+    checkmate::assert_subset(names(x), c("alpha", "betax0", "betax1", "alpha_pi", "beta_pi", "non_zero_type_topics"))
+    if(!is.null(x$non_zero_type_topics)) {
+      checkmate::assert_class(x$non_zero_type_topics, "list")
     }
   }
 
