@@ -47,8 +47,8 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
   double betax1 = priors["betax1"];
   double alpha_pi = priors["alpha_pi"];
   double beta_pi = priors["beta_pi"];
-  LogicalVector prior_types = priors["tmp"]["prior_types"];
-  IntegerVector prior_types_map = priors["tmp"]["prior_types_map"];
+  LogicalVector prior_types = priors["tmp_prior_types"];
+  IntegerVector prior_types_map = priors["tmp_prior_types_map"];
 
   // Memory allocation and pre calculations
   int d, k, v, p, x, px, kx;
@@ -67,6 +67,12 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
     p = party[i] - 1;
     x = perspective[i];
     px = x * (p + 1);
+
+    //* Handling of prior on Phi
+    //if(prior_types[v]){
+      //  LogicalVector prior_types = priors["tmp"]["prior_types"];
+      //}
+    //
 
     // Remove current position in matrices
     n_dk(d, k) -= 1;

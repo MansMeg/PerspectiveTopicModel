@@ -56,13 +56,12 @@ perspective_sampler <-function(state, priors, params){
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
   # Prepare prior on Phi object
-  priors$tmp <-
-    list(prior_types = logical(length(vocabulary)),
-         prior_types_map = integer(length(vocabulary)))
+  priors$tmp_prior_types = logical(length(vocabulary))
+  priors$tmp_prior_types_map = integer(length(vocabulary))
   for(i in seq_along(priors$non_zero_type_topics)){
     idx <- which(vocabulary %in% names(priors$non_zero_type_topics)[i])
-    priors$tmp$prior_types[idx] <- TRUE
-    priors$tmp$prior_types_map[idx] <- i
+    priors$tmp_prior_types[idx] <- TRUE
+    priors$tmp_prior_types_map[idx] <- i
   }
 
   # Sanity checks
