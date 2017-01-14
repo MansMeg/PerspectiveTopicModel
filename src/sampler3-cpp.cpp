@@ -49,6 +49,7 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
   double beta_pi = priors["beta_pi"];
   LogicalVector prior_types = priors["tmp_prior_types"];
   IntegerVector prior_types_map = priors["tmp_prior_types_map"];
+  List prior_types_indicator = priors["tmp_prior_types_indicator"];
 
   // Memory allocation and pre calculations
   int d, k, v, p, x, px, kx;
@@ -58,7 +59,7 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
   double beta_x0_sum = betax0 * V;
   double beta_x1_sum = betax1 * V;
   double n_dj_alpha, alpha_beta_pi_n_pk;
-
+  LogicalVector prior_types_indicator_v;
 
   for (int i = 0; i < N; ++i) {
     d = doc[i] - 1;
@@ -67,12 +68,11 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
     p = party[i] - 1;
     x = perspective[i];
     px = x * (p + 1);
-
-    //* Handling of prior on Phi
-    //if(prior_types[v]){
-      //  LogicalVector prior_types = priors["tmp"]["prior_types"];
-      //}
-    //
+    if(prior_types[v]){
+      // prior_types_map is R indexed
+      LogicalVector prior_types_indicator_v = prior_types_indicator[prior_types_map[v] - 1];
+      // Rcout << "Type: " << v + 1 << " Logical vector: " << prior_types_indicator_v << std::endl;
+    }
 
     // Remove current position in matrices
     n_dk(d, k) -= 1;
@@ -86,6 +86,15 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
       n_dj_alpha = n_dk(d, j) + alpha;
       alpha_beta_pi_n_pk = alpha_beta_pi + n_pk(p, j);
 
+      // Set non-prior values to zero
+//      if(prior_types[v]){
+//        if(prior_types_indicator_v[j]){
+//        //* Handling of prior on Phi
+//          Rcout << "Type " << v + 1 << " Topic" << j + 1 << std::endl;
+//        // If set to zero -> skip to next j
+//        }
+//      }
+
       // x == 0
       u_prob[j] = (beta_pi + n_kpx(pos3d(j, p, 0, n_kpx_dims))) / alpha_beta_pi_n_pk;
       u_prob[j] *= (n_kvpx(pos3d(j, v, 0, n_kvpx_dims)) + betax0) / (n_xk(0, j) + beta_x0_sum);
@@ -95,6 +104,7 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
       u_prob[j + K] = (alpha_pi + n_kpx(pos3d(j, p, 1, n_kpx_dims))) / (alpha_beta_pi + n_pk(p, j));
       u_prob[j + K] *= (n_kvpx(pos3d(j, v, p + 1, n_kvpx_dims)) + betax1) / (n_kpx(pos3d(j, p, 1, n_kpx_dims)) + beta_x1_sum);
       u_prob[j + K] *= n_dj_alpha;
+
     }
 
     // Draw indicator
