@@ -56,14 +56,16 @@ perspective_sampler <-function(state, priors, params){
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
   # Prepare prior on Phi object
-  priors$tmp_prior_types <- logical(length(vocabulary))
-  priors$tmp_prior_types_map <- integer(length(vocabulary))
-  priors$tmp_prior_types_indicator <- list()
-  for(i in seq_along(priors$non_zero_type_topics)){
-    idx <- which(vocabulary %in% names(priors$non_zero_type_topics)[i])
-    priors$tmp_prior_types[idx] <- TRUE
-    priors$tmp_prior_types_map[idx] <- i
-    priors$tmp_prior_types_indicator[[i]] <- 1:constants$K %in% priors$non_zero_type_topics[[i]]
+  if(!is.null(priors$non_zero_type_topics)){
+    priors$tmp_prior_types <- logical(length(vocabulary))
+    priors$tmp_prior_types_map <- integer(length(vocabulary))
+    priors$tmp_prior_types_indicator <- list()
+    for(i in seq_along(priors$non_zero_type_topics)){
+      idx <- which(vocabulary %in% names(priors$non_zero_type_topics)[i])
+      priors$tmp_prior_types[idx] <- TRUE
+      priors$tmp_prior_types_map[idx] <- i
+      priors$tmp_prior_types_indicator[[i]] <- 1:constants$K %in% priors$non_zero_type_topics[[i]]
+    }
   }
 
   # Sanity checks
@@ -84,10 +86,15 @@ perspective_sampler <-function(state, priors, params){
   if(verbose) pb <- utils::txtProgressBar(min = 1, max = params$gibbs_iter, initial = params$start_iter, style = 3)
 
   ### Sampler
-  results <- per_sampler3_cpp(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
+  if(!is.null(priors$non_zero_type_topics)){
+    per_sampler <- per_sampler3_cpp
+  } else {
+    per_sampler <- per_sampler2_cpp
+  }
+  results <- per_sampler(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
 
   for (step in params$start_iter:params$gibbs_iter){
-    results <- per_sampler3_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
+    results <- per_sampler(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
     if(verbose) utils::setTxtProgressBar(pb, step)
     if(!is.null(params$save_state_every) && step %% params$save_state_every == 0) save(results, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
   }
