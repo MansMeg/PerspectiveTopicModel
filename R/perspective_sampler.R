@@ -102,7 +102,7 @@ perspective_sampler <-function(state, priors, params){
 
   # Parse final results
   results$tmp <- NULL
-  results$state$type <- factor(results$state$type, labels = vocabulary)
-  results$state$party <- factor(results$state$type, labels = parties)
+  results$state$type <- factor(results$state$type, levels = 1:length(vocabulary), labels = vocabulary)
+  results$state$party <- factor(results$state$party, levels = 1:length(parties), labels = parties)
   results
 }
