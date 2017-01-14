@@ -31,7 +31,7 @@ perspective_sampler <-function(state, priors, params){
   if(!is.null(priors$non_zero_type_topics)){
     checkmate::assert(all(names(priors$non_zero_type_topics) %in% levels(state$type)))
     for(i in seq_along(priors$non_zero_type_topics)){
-      checkmate::assert_integerish(non_zero_type_topics[[i]], lower = 1, upper = constants$K)
+      checkmate::assert_integerish(priors$non_zero_type_topics[[i]], lower = 1, upper = constants$K)
     }
   }
 
