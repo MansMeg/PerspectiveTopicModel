@@ -19,6 +19,7 @@ perspective_sampler <-function(state, priors, params){
 
   # Extract vocabulary
   vocabulary <- levels(state$type)
+  parties <- levels(state$party)
 
   # Create constants
   constants <- list(D = max(state$doc),
@@ -85,7 +86,7 @@ perspective_sampler <-function(state, priors, params){
   # Progressbar
   if(verbose) pb <- utils::txtProgressBar(min = 1, max = params$gibbs_iter, initial = params$start_iter, style = 3)
 
-  ### Sampler
+  ### Run sampler
   if(!is.null(priors$non_zero_type_topics)){
     per_sampler <- per_sampler3_cpp
   } else {
@@ -98,5 +99,10 @@ perspective_sampler <-function(state, priors, params){
     if(verbose) utils::setTxtProgressBar(pb, step)
     if(!is.null(params$save_state_every) && step %% params$save_state_every == 0) save(results, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
   }
+
+  # Parse final results
+  results$tmp <- NULL
+  results$state$type <- factor(results$state$type, labels = vocabulary)
+  results$state$party <- factor(results$state$type, labels = parties)
   results
 }
