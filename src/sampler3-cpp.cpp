@@ -90,13 +90,11 @@ List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List co
       if(prior_types[v]){
         if(!prior_types_indicator_v[j]){
           // Handling of prior on Phi
-          Rcout << "Type: " << v + 1 << " Topic: " << j + 1 << " Logical vector[j]: " << prior_types_indicator_v[j] <<  std::endl;
           // If set to zero -> skip to next j
           u_prob[j] = 0.0;
           u_prob[j + K] = 0.0;
           continue;
         }
-        Rcout << " ping " <<  std::endl;
       }
 
       // x == 0
