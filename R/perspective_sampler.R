@@ -97,7 +97,12 @@ perspective_sampler <-function(state, priors, params){
   for (step in params$start_iter:params$gibbs_iter){
     results <- per_sampler(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
     if(verbose) utils::setTxtProgressBar(pb, step)
-    if(!is.null(params$save_state_every) && step %% params$save_state_every == 0) save(results, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
+    if(!is.null(params$save_state_every) && step %% params$save_state_every == 0) {
+      state <- results$state
+      state$type <- factor(state$type, levels = 1:length(vocabulary), labels = vocabulary)
+      state$party <- factor(state$party, levels = 1:length(parties), labels = parties)
+      save(state, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
+    }
   }
 
   # Parse final results
