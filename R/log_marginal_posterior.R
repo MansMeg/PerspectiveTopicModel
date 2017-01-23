@@ -19,9 +19,10 @@ log_marginal_posterior <- function(count_matrices, priors){
   n_xk <- count_matrices$n_xk
   n_d <- apply(n_dk, 1, sum)
 
-  V <- constants$V
-  K <- constants$K
-  P <- constants$P
+  V <- dim(n_kvpx)[2]
+  K <- dim(n_dk)[2]
+  P <- dim(n_pk)[1]
+  D <- dim(n_dk)[1]
 
   betax0 <- priors$betax0
   betax1 <- priors$betax1
