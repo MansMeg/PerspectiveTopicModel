@@ -41,14 +41,22 @@ test_that("log_marginal_posterior", {
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
   expect_silent(
-    lmp0 <- log_marginal_posterior(count_matrices, priors)
+    lmp0 <- log_marginal_posterior_computation(count_matrices, priors)
+  )
+  expect_silent(
+    lmp0b <- log_marginal_posterior(state_df, priors)
   )
   expect_equal(lmp0, -8260.744, tolerance = 0.01)
+  expect_equal(lmp0, lmp0b, tolerance = 0.01)
 
   # Run 100 iterations and check lmp < lmp0
   expect_silent(res <- perspective_sampler(state_df, priors, params))
   expect_silent(
-    lmp100 <- log_marginal_posterior(res$count_matrices, priors)
+    lmp100 <- log_marginal_posterior_computation(res$count_matrices, priors)
+  )
+  expect_silent(
+    lmp100b <- log_marginal_posterior(res$state, priors)
   )
   expect_equal(lmp100, -4687.773, tolerance = 0.01)
+  expect_equal(lmp100, lmp100b, tolerance = 0.01)
 })

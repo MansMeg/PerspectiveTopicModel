@@ -6,7 +6,7 @@
 #' @param priors a \code{prior} object.
 #'
 #' @keywords Internal
-log_marginal_posterior <- function(count_matrices, priors){
+log_marginal_posterior_computation <- function(count_matrices, priors){
   # Assertions
   checkmate::assert_class(priors, "priors")
   checkmate::assert_names(names(count_matrices), permutation.of = c("n_dk", "n_kvpx", "n_kpx", "n_pk", "n_xk" ))
@@ -53,7 +53,7 @@ log_marginal_posterior <- function(count_matrices, priors){
 #' @param priors a \code{priors} object.
 #'
 #' @export
-log_marginal_posterior_state <- function(state, priors){
+log_marginal_posterior <- function(state, priors){
   # Assertions
   assert_state(state)
 
@@ -61,9 +61,9 @@ log_marginal_posterior_state <- function(state, priors){
   constants <- get_constants(state)
 
   # Compute count matrices
-  count_matrices <- init_count2_cpp(state_df, constants)
+  count_matrices <- PerspectiveTopicModel:::init_count2_cpp(state_df, constants)
   count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
-  log_marginal_posterior(count_matrices,priors)
+  log_marginal_posterior_computation(count_matrices,priors)
 }

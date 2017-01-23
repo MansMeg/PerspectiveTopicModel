@@ -2,17 +2,16 @@
 % Please edit documentation in R/log_marginal_posterior.R
 \name{log_marginal_posterior}
 \alias{log_marginal_posterior}
-\title{Log-Marginal posterior}
+\title{Compute log marginal posterior for a state file}
 \usage{
-log_marginal_posterior(count_matrices, priors)
+log_marginal_posterior(state, priors)
 }
 \arguments{
-\item{count_matrices}{a list of the following count matrices (with the same name): \code{n_dk}, \code{n_kvpx}, \code{n_kpx}, \code{n_pk}, \code{n_xk}}
+\item{state}{a \code{state} object.}
 
-\item{priors}{a \code{prior} object.}
+\item{priors}{a \code{priors} object.}
 }
 \description{
-Compute the log marginal posterior for the perspective topic model.
+Compute log marginal posterior for a state file
 }
-\keyword{Internal}
 
