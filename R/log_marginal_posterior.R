@@ -47,4 +47,23 @@ log_marginal_posterior <- function(count_matrices, priors){
   a + b + c + d
 }
 
+#' Compute log marginal posterior for a state file
+#'
+#' @param state a \code{state} object.
+#' @param priors a \code{priors} object.
+#'
+#' @export
+log_marginal_posterior_state <- function(state, priors){
+  # Assertions
+  assert_state(state)
 
+  # Get constants
+  constants <- get_constants(state)
+
+  # Compute count matrices
+  count_matrices <- init_count2_cpp(state_df, constants)
+  count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
+  count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
+
+  log_marginal_posterior(count_matrices,priors)
+}
