@@ -7,13 +7,7 @@
 #' @export
 perspective_sampler <-function(state, priors, params){
   # Assertions
-  checkmate::assert_subset(c("doc", "type", "topic", "party", "perspective"), names(state))
-  checkmate::assert_integer(state$doc)
-  checkmate::assert_factor(state$type)
-  checkmate::assert_integer(state$topic)
-  checkmate::assert_factor(state$party)
-  checkmate::assert_integer(state$perspective)
-
+  assert_state(state)
   checkmate::assert_class(priors, "priors")
   checkmate::assert_class(params, "parameters")
 
@@ -22,11 +16,7 @@ perspective_sampler <-function(state, priors, params){
   parties <- levels(state$party)
 
   # Create constants
-  constants <- list(D = max(state$doc),
-                    V = length(vocabulary),
-                    K = max(state$topic),
-                    P = length(levels(state$party)),
-                    N = nrow(state))
+  constants <- get_constants(state)
 
   # Assert
   checkmate::assert(max(state$topic) == params$K)
