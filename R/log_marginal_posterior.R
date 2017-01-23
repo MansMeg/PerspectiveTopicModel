@@ -61,7 +61,7 @@ log_marginal_posterior <- function(state, priors){
   constants <- get_constants(state)
 
   # Compute count matrices
-  count_matrices <- PerspectiveTopicModel:::init_count2_cpp(state_df, constants)
+  count_matrices <- PerspectiveTopicModel:::init_count2_cpp(state, constants)
   count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
