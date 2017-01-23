@@ -76,7 +76,7 @@ perspective_sampler <-function(state, priors, params){
   # Progressbar
   if(verbose) {
     pb <- utils::txtProgressBar(min = params$start_iter, max = params$gibbs_iter, initial = params$start_iter, style = 3)
-    utils::setTxtProgressBar(pb, step)
+    utils::setTxtProgressBar(pb, params$start_iter)
   }
 
   ### Setup log marginal posterior
