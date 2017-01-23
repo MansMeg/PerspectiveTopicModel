@@ -84,7 +84,7 @@ perspective_sampler <-function(state, priors, params){
   }
   results <- per_sampler(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
 
-  for (step in params$start_iter:params$gibbs_iter){
+  for (step in (params$start_iter + 1):params$gibbs_iter){
     results <- per_sampler(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
     if(verbose) utils::setTxtProgressBar(pb, step)
     if(!is.null(params$save_state_every) && step %% params$save_state_every == 0) {
