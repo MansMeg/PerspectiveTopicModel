@@ -74,7 +74,15 @@ perspective_sampler <-function(state, priors, params){
     verbose <- params$verbose
   }
   # Progressbar
-  if(verbose) pb <- utils::txtProgressBar(min = 1, max = params$gibbs_iter, initial = params$start_iter, style = 3)
+  if(verbose) {
+    pb <- utils::txtProgressBar(min = params$start_iter, max = params$gibbs_iter, initial = params$start_iter, style = 3)
+    utils::setTxtProgressBar(pb, step)
+  }
+
+  ### Setup log marginal posterior
+  lmp <- setup_log_marginal_posterior_table(params)
+  lmp[1,2] <- log_marginal_posterior_computation(count_matrices, priors)
+  lmp_idx <- 2L
 
   ### Run sampler
   if(!is.null(priors$non_zero_type_topics)){
@@ -82,16 +90,28 @@ perspective_sampler <-function(state, priors, params){
   } else {
     per_sampler <- per_sampler2_cpp
   }
+
   results <- per_sampler(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
+  if(lmp[lmp_idx, 1] == params$start_iter){
+    lmp[lmp_idx, 2] <- log_marginal_posterior_computation(results$count_matrices, priors)
+    lmp_idx <- lmp_idx + 1L
+  }
 
   for (step in (params$start_iter + 1):params$gibbs_iter){
     results <- per_sampler(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
+
+    if(lmp[lmp_idx, 1] == step){
+      lmp[lmp_idx, 2] <- log_marginal_posterior_computation(results$count_matrices, priors)
+      lmp_idx <- lmp_idx + 1L
+    }
+
     if(verbose) utils::setTxtProgressBar(pb, step)
+
     if(!is.null(params$save_state_every) && step %% params$save_state_every == 0) {
       state <- results$state
       state$type <- factor(state$type, levels = 1:length(vocabulary), labels = vocabulary)
       state$party <- factor(state$party, levels = 1:length(parties), labels = parties)
-      save(state, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
+      save(state, priors, parameters, lmp, file = paste0(state_file_name, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
     }
   }
 
@@ -99,5 +119,6 @@ perspective_sampler <-function(state, priors, params){
   results$tmp <- NULL
   results$state$type <- factor(results$state$type, levels = 1:length(vocabulary), labels = vocabulary)
   results$state$party <- factor(results$state$party, levels = 1:length(parties), labels = parties)
+  results$lmp <- lmp
   results
 }

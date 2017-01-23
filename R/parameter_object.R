@@ -30,6 +30,7 @@ parameters <- function(x = NULL,
   params_obj <- list(K = K,
                     start_iter = start_iter,
                     gibbs_iter = gibbs_iter,
+                    log_marginal_posterior_every = log_marginal_posterior_every,
                     save_state_every = save_state_every,
                     state_path = state_path,
                     seed = seed,
@@ -45,7 +46,7 @@ parameters <- function(x = NULL,
   checkmate::assert_integerish(params_obj$K, lower = 2L)
   checkmate::assert_integerish(params_obj$gibbs_iter, lower = params_obj$start_iter)
   checkmate::assert_integerish(params_obj$log_marginal_posterior_every, lower = 1L)
-  checkmate::assert_integerish(params_obj$start_iter, lower = 2L, upper = params_obj$gibbs_iter)
+  checkmate::assert_integerish(params_obj$start_iter, lower = 1L, upper = params_obj$gibbs_iter)
   checkmate::assert_integerish(params_obj$save_state_every, lower = 1L, params_obj$gibbs_iter, null.ok = TRUE)
   checkmate::assert_path_for_output(params_obj$state_path)
   checkmate::assert_integerish(params_obj$seed, lower = 1L)
