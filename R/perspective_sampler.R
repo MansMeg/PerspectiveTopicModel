@@ -40,7 +40,7 @@ perspective_sampler <-function(state, priors, params){
   state$party <- as.integer(state$party)
 
   # Init count matrices
-  count_matrices <- init_count2_cpp(state, constants)
+  count_matrices <- PerspectiveTopicModel:::init_count2_cpp(state, constants)
 
   # Calculate extra count matrices
   count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
@@ -86,9 +86,9 @@ perspective_sampler <-function(state, priors, params){
 
   ### Run sampler
   if(!is.null(priors$non_zero_type_topics)){
-    per_sampler <- per_sampler3_cpp
+    per_sampler <- PerspectiveTopicModel:::per_sampler3_cpp
   } else {
-    per_sampler <- per_sampler2_cpp
+    per_sampler <- PerspectiveTopicModel:::per_sampler2_cpp
   }
 
   results <- per_sampler(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
@@ -120,5 +120,8 @@ perspective_sampler <-function(state, priors, params){
   results$state$type <- factor(results$state$type, levels = 1:length(vocabulary), labels = vocabulary)
   results$state$party <- factor(results$state$party, levels = 1:length(parties), labels = parties)
   results$lmp <- lmp
+  results$parameters <- params
+  results$priors <- priors
+  class(results) <- "perspective_topic_model"
   results
 }
