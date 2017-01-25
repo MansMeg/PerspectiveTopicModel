@@ -47,6 +47,7 @@ perspective_sampler <-function(state, priors, params){
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
   # Prepare prior on Phi object
+  original_priors <- priors
   if(!is.null(priors$non_zero_type_topics)){
     priors$tmp_prior_types <- logical(length(vocabulary))
     priors$tmp_prior_types_map <- integer(length(vocabulary))
@@ -121,7 +122,7 @@ perspective_sampler <-function(state, priors, params){
   results$state$party <- factor(results$state$party, levels = 1:length(parties), labels = parties)
   results$lmp <- lmp
   results$parameters <- params
-  results$priors <- priors
+  results$priors <- original_priors
   class(results) <- "perspective_topic_model"
   results
 }
