@@ -40,7 +40,7 @@ perspective_sampler <-function(state, priors, params){
   state$party <- as.integer(state$party)
 
   # Init count matrices
-  count_matrices <- PerspectiveTopicModel:::init_count2_cpp(state, constants)
+  count_matrices <- init_count2_cpp(state, constants)
 
   # Calculate extra count matrices
   count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
@@ -86,9 +86,9 @@ perspective_sampler <-function(state, priors, params){
 
   ### Run sampler
   if(!is.null(priors$non_zero_type_topics)){
-    per_sampler <- PerspectiveTopicModel:::per_sampler3_cpp
+    per_sampler <- per_sampler3_cpp
   } else {
-    per_sampler <- PerspectiveTopicModel:::per_sampler2_cpp
+    per_sampler <- per_sampler2_cpp
   }
 
   results <- per_sampler(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
