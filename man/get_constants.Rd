@@ -9,6 +9,9 @@ get_constants(state)
 \arguments{
 \item{state}{a \code{state} object.}
 }
+\value{
+a \code{state_constants} object.
+}
 \description{
 Extract constants from a state object
 }

@@ -5,7 +5,8 @@
 \title{Constructor for prior object}
 \usage{
 priors(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01,
-  alpha_pi = 0.1, beta_pi = 0.1, non_zero_type_topics = NULL)
+  alpha_pi = 0.1, beta_pi = 0.1, non_zero_type_topics = NULL,
+  non_zero_doc_topics = NULL, perspective_topics = NULL)
 }
 \arguments{
 \item{x}{NULL or a list with priors to set}
@@ -21,6 +22,10 @@ priors(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01,
 \item{beta_pi}{The beta_pi parameter}
 
 \item{non_zero_type_topics}{List of priors on wordtypes. See details.}
+
+\item{non_zero_doc_topics}{List of priors on documents. See details.}
+
+\item{perspective_topics}{Topics that contain perspectives. If \code{NULL}, all topics has perspectives.}
 }
 \value{
 A \code{priors} object
@@ -29,6 +34,7 @@ A \code{priors} object
 Constructor for prior object
 }
 \details{
-A list of types with prior settings. Each element is a type that contains a vector of non_zero probability topics.
+The parameter \code{non_zero_type_topics} is a list named with types with prior settings. Each element is a type that contains a vector of non_zero probability topics.
+The parameter \code{non_zero_doc_topics} List of priors on documents. See details.
 }
 
