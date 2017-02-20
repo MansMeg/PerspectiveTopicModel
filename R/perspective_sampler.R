@@ -6,6 +6,12 @@
 #'
 #' @export
 perspective_sampler <-function(state, priors, params){
+  # Converting
+  if(!is.factor(state$doc)) {
+    state$doc <- as.factor(state$doc)
+    warning("state$doc is not a factor")
+  }
+
   # Assertions
   assert_state(state)
   checkmate::assert_class(priors, "priors")
@@ -14,12 +20,14 @@ perspective_sampler <-function(state, priors, params){
   # Extract vocabulary
   vocabulary <- levels(state$type)
   parties <- levels(state$party)
-  doc_ids <- as.character(unique(state$doc))
+  doc_ids <- levels(state$doc)
 
   # Create constants
   constants <- get_constants(state)
 
   # Assert
+  checkmate::assert_character(vocabulary, len = constants$V)
+  checkmate::assert_character(doc_ids, len = constants$D)
   checkmate::assert(max(state$topic) == params$K)
 
   # Assert non_zero_type_topics and non_zero_doc_topics
@@ -31,6 +39,7 @@ perspective_sampler <-function(state, priors, params){
   # Remove factors
   state$type <- as.integer(state$type)
   state$party <- as.integer(state$party)
+  state$doc <- as.integer(state$doc)
 
   # Init count matrices
   count_matrices <- init_count2_cpp(state, constants)
@@ -69,8 +78,8 @@ perspective_sampler <-function(state, priors, params){
   lmp_idx <- 2L
 
   ### Run sampler
-  if(!is.null(priors$non_zero_type_topics)){
-    per_sampler <- per_sampler3_cpp
+  if(!is.null(priors$non_zero_type_topics) | !is.null(priors$non_zero_doc_topics)){
+    per_sampler <- per_sampler4_cpp
   } else {
     per_sampler <- per_sampler2_cpp
   }
@@ -101,19 +110,19 @@ perspective_sampler <-function(state, priors, params){
 
   # Cleanup final model
   results$tmp <- NULL
-  results$priors$tmp_prior_types <- NULL
-  results$priors$tmp_prior_types_map <- NULL
-  results$priors$tmp_prior_types_indicator <- NULL
-  results$priors$tmp_prior_doc <- NULL
-  results$priors$tmp_prior_doc_map <- NULL
-  results$priors$tmp_prior_doc_indicator <- NULL
+  priors$tmp_prior_types <- NULL
+  priors$tmp_prior_types_map <- NULL
+  priors$tmp_prior_types_indicator <- NULL
+  priors$tmp_prior_doc <- NULL
+  priors$tmp_prior_doc_map <- NULL
+  priors$tmp_prior_doc_indicator <- NULL
+  results$priors <- priors
 
   # Final output
   results$state$type <- factor(results$state$type, levels = 1:length(vocabulary), labels = vocabulary)
   results$state$party <- factor(results$state$party, levels = 1:length(parties), labels = parties)
   results$lmp <- lmp
   results$parameters <- params
-  results$priors <- priors
   class(results) <- "perspective_topic_model"
   results
 }
