@@ -10,7 +10,7 @@ get_constants <- function(state){
   assert_state(state)
 
   # Extract constants
-  res <- list(D = max(state$doc),
+  res <- list(D = length(levels(state$doc)),
        V = length(levels(state$type)),
        K = max(state$topic),
        P = length(levels(state$party)),
