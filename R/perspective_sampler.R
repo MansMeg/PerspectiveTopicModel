@@ -14,6 +14,7 @@ perspective_sampler <-function(state, priors, params){
   # Extract vocabulary
   vocabulary <- levels(state$type)
   parties <- levels(state$party)
+  doc_ids <- as.character(unique(state$doc))
 
   # Create constants
   constants <- get_constants(state)
@@ -21,13 +22,8 @@ perspective_sampler <-function(state, priors, params){
   # Assert
   checkmate::assert(max(state$topic) == params$K)
 
-  # Assert non_zero_type_topics
-  if(!is.null(priors$non_zero_type_topics)){
-    checkmate::assert(all(names(priors$non_zero_type_topics) %in% levels(state$type)))
-    for(i in seq_along(priors$non_zero_type_topics)){
-      checkmate::assert_integerish(priors$non_zero_type_topics[[i]], lower = 1, upper = constants$K)
-    }
-  }
+  # Assert non_zero_type_topics and non_zero_doc_topics
+  assert_non_zero_type_topics(priors, constants, vocabulary, doc_ids)
 
   # Warnings
   if(max(state$doc) != length(unique(state$doc))) warning("Missing document ids.")
