@@ -9,6 +9,8 @@ prepare_prior_for_sampling(priors, constants, vocabulary, doc_ids)
 \arguments{
 \item{priors}{a \code{priors} object.}
 
+\item{constants}{a \code{state_constants} object.}
+
 \item{vocabulary}{a character vector with the vocabulary.}
 
 \item{doc_ids}{a character vector with the document ids.}
