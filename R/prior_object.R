@@ -75,6 +75,7 @@ priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi
 #' Prepare the prior objects for sampling
 #'
 #' @param priors a \code{priors} object.
+#' @param constants a \code{state_constants} object.
 #' @param vocabulary a character vector with the vocabulary.
 #' @param doc_ids a character vector with the document ids.
 #'
