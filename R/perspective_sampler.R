@@ -26,10 +26,7 @@ perspective_sampler <-function(state, priors, params){
   assert_non_zero_type_topics(priors, constants, vocabulary, doc_ids)
 
   # Warnings
-  if(max(state$doc) != length(unique(state$doc))) warning("Missing document ids.")
-  if(max(state$topic) != length(unique(state$topic))) warning("Missing topic ids.")
-  if(length(unique(state$party)) != length(levels(state$party))) warning("Missing party ids.")
-  if(length(unique(state$type)) != length(levels(state$type))) warning("Missing type ids.")
+  throw_state_warnings(state)
 
   # Remove factors
   state$type <- as.integer(state$type)
