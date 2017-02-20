@@ -4,7 +4,7 @@
 \alias{prepare_prior_for_sampling}
 \title{Prepare the prior objects for sampling}
 \usage{
-prepare_prior_for_sampling(priors, vocabulary, doc_ids)
+prepare_prior_for_sampling(priors, constants, vocabulary, doc_ids)
 }
 \arguments{
 \item{priors}{a \code{priors} object.}
