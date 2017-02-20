@@ -8,7 +8,7 @@ test_that("log_marginal_posterior", {
   V <- 31
   K <- 10
   P <- 3
-  state_df <- data.frame(doc = sample(1:D, size = N, replace = TRUE),
+  state_df <- data.frame(doc = factor(sample(1:D, size = N, replace = TRUE)),
                          type = factor(sample(1:V, size = N, replace = TRUE)),
                          topic = sample(1:K, size = N, replace = TRUE),
                          party = factor(sample(1:P, size = N, replace = TRUE)),
@@ -70,7 +70,7 @@ test_that("log_marginal_posterior manual check", {
   V <- 2
   K <- 2
   P <- 2
-  state_df <- data.frame(doc = sample(1:D, size = N, replace = TRUE),
+  state_df <- data.frame(doc = factor(sample(1:D, size = N, replace = TRUE)),
                          type = factor(sample(1:V, size = N, replace = TRUE)),
                          topic = sample(1:K, size = N, replace = TRUE),
                          party = factor(sample(1:P, size = N, replace = TRUE)),
