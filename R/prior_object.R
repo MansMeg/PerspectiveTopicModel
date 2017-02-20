@@ -79,8 +79,9 @@ priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi
 #' @param doc_ids a character vector with the document ids.
 #'
 #' @keywords Internal
-prepare_prior_for_sampling <- function(priors, vocabulary, doc_ids){
+prepare_prior_for_sampling <- function(priors, constants, vocabulary, doc_ids){
   checkmate::assert_class(priors, "priors")
+  checkmate::assert_class(constants, "state_constants")
   checkmate::assert_character(vocabulary, len = constants$V)
   checkmate::assert_character(doc_ids, len = constants$D)
 
@@ -94,6 +95,10 @@ prepare_prior_for_sampling <- function(priors, vocabulary, doc_ids){
       priors$tmp_prior_types_map[idx] <- i
       priors$tmp_prior_types_indicator[[i]] <- 1:constants$K %in% priors$non_zero_type_topics[[i]]
     }
+  } else {
+    priors$tmp_prior_types <- logical(length(vocabulary))
+    priors$tmp_prior_types_map <- integer(length(vocabulary))
+    priors$tmp_prior_types_indicator <- list()
   }
 
   if(!is.null(priors$non_zero_doc_topics)){
@@ -106,6 +111,10 @@ prepare_prior_for_sampling <- function(priors, vocabulary, doc_ids){
       priors$tmp_prior_doc_map[idx] <- i
       priors$tmp_prior_doc_indicator[[i]] <- 1:constants$K %in% priors$non_zero_doc_topics[[i]]
     }
+  } else {
+    priors$tmp_prior_doc <- logical(length(doc_ids))
+    priors$tmp_prior_doc_map <- integer(length(doc_ids))
+    priors$tmp_prior_doc_indicator <- list()
   }
 
   priors
