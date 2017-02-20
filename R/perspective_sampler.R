@@ -121,6 +121,7 @@ perspective_sampler <-function(state, priors, params){
   # Final output
   results$state$type <- factor(results$state$type, levels = 1:length(vocabulary), labels = vocabulary)
   results$state$party <- factor(results$state$party, levels = 1:length(parties), labels = parties)
+  results$state$doc <- factor(results$state$doc, levels = 1:length(doc_ids), labels = doc_ids)
   results$lmp <- lmp
   results$parameters <- params
   class(results) <- "perspective_topic_model"
