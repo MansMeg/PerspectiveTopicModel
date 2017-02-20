@@ -104,6 +104,9 @@ perspective_sampler <-function(state, priors, params){
   results$priors$tmp_prior_types <- NULL
   results$priors$tmp_prior_types_map <- NULL
   results$priors$tmp_prior_types_indicator <- NULL
+  results$priors$tmp_prior_doc <- NULL
+  results$priors$tmp_prior_doc_map <- NULL
+  results$priors$tmp_prior_doc_indicator <- NULL
 
   # Final output
   results$state$type <- factor(results$state$type, levels = 1:length(vocabulary), labels = vocabulary)
