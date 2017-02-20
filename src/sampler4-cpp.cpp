@@ -66,6 +66,7 @@ List per_sampler4_cpp(DataFrame state, List count_matrices, List priors, List co
   LogicalVector prior_doc_indicator_d(K);
 
   for (int i = 0; i < N; ++i) {
+    // Rcout << "Type: " << v << " D: " << d << std::endl;
     d = doc[i] - 1;
     k = topic[i] - 1;
     v = type[i] - 1;
@@ -79,8 +80,8 @@ List per_sampler4_cpp(DataFrame state, List count_matrices, List priors, List co
     }
     if(prior_doc[d]){
       // prior_doc_map is R indexed
-      prior_doc_indicator_d = prior_doc_indicator[prior_doc_map[v] - 1];
-      // Rcout << "Type: " << v + 1 << " Logical vector: " << prior_types_indicator_v << std::endl;
+      prior_doc_indicator_d = prior_doc_indicator[prior_doc_map[d] - 1];
+      // Rcout << "Doc: " << d + 1 << " Logical vector: " << prior_doc_indicator_d << std::endl;
     }
 
     // Remove current position in matrices

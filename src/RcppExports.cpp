@@ -96,3 +96,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// per_sampler4_cpp
+List per_sampler4_cpp(DataFrame state, List count_matrices, List priors, List constants);
+RcppExport SEXP PerspectiveTopicModel_per_sampler4_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DataFrame >::type state(stateSEXP);
+    Rcpp::traits::input_parameter< List >::type count_matrices(count_matricesSEXP);
+    Rcpp::traits::input_parameter< List >::type priors(priorsSEXP);
+    Rcpp::traits::input_parameter< List >::type constants(constantsSEXP);
+    rcpp_result_gen = Rcpp::wrap(per_sampler4_cpp(state, count_matrices, priors, constants));
+    return rcpp_result_gen;
+END_RCPP
+}
