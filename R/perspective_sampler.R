@@ -23,7 +23,7 @@ perspective_sampler <-function(state, priors, params){
   checkmate::assert(max(state$topic) == params$K)
 
   # Assert non_zero_type_topics and non_zero_doc_topics
-  assert_non_zero_type_topics(priors, constants, vocabulary, doc_ids)
+  assert_non_zero(priors, constants, vocabulary, doc_ids)
 
   # Warnings
   throw_state_warnings(state)
@@ -66,6 +66,7 @@ perspective_sampler <-function(state, priors, params){
   } else {
     verbose <- params$verbose
   }
+
   # Progressbar
   if(verbose) {
     pb <- utils::txtProgressBar(min = params$start_iter, max = params$gibbs_iter, initial = params$start_iter, style = 3)
