@@ -16,7 +16,7 @@ using namespace Rcpp;
 //' @param constants A list of constants
 //'
 //[[Rcpp::export]]
-List per_sampler4_cpp(DataFrame state, List count_matrices, List priors, List constants) {
+List per_sampler5_cpp(DataFrame state, List count_matrices, List priors, List constants) {
 
   // Define constants
   int D = constants["D"];
