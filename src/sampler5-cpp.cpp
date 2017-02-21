@@ -122,6 +122,14 @@ List per_sampler5_cpp(DataFrame state, List count_matrices, List priors, List co
       u_prob[j] *= (n_kvpx(pos3d(j, v, 0, n_kvpx_dims)) + betax0) / (n_xk(0, j) + beta_x0_sum);
       u_prob[j] *= n_dj_alpha;
 
+      // If perspective is not used, prob to zero
+      if(!perspective_flag[j]){
+        u_prob[j + K] = 0.0;
+        // If set to zero -> skip to next j
+        // Rcout << "Topic: " << j + 1 << " u_prob: " << u_prob << std::endl;
+        continue;
+      }
+
       // x == 1
       u_prob[j + K] = (alpha_pi + n_kpx(pos3d(j, p, 1, n_kpx_dims))) / (alpha_beta_pi + n_pk(p, j));
       u_prob[j + K] *= (n_kvpx(pos3d(j, v, p + 1, n_kvpx_dims)) + betax1) / (n_kpx(pos3d(j, p, 1, n_kpx_dims)) + beta_x1_sum);

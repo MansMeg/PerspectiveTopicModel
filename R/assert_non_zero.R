@@ -26,5 +26,5 @@ assert_non_zero<- function(priors, constants, vocabulary, doc_ids){
     }
   }
 
-  checkmate::assert_integerish(priors$perspective_topics, max.len = constants$K, upper = constants$K)
+  checkmate::assert_integerish(priors$perspective_topics, max.len = constants$K, upper = constants$K, null.ok = TRUE)
 }
