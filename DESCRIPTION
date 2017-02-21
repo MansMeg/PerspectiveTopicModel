@@ -1,7 +1,7 @@
 Package: PerspectiveTopicModel
 Type: Package
 Title: Samples a perspetice topic model
-Version: 0.5.0
+Version: 0.6.0
 Author: Mans Magnusson
 Maintainer: mans Magnusson <mans.magnusson@liu.se>
 Description: Samples different perspective topic models.
