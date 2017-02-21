@@ -16,11 +16,11 @@ using namespace Rcpp;
 List per_sampler_cpp(DataFrame state, List count_matrices, List priors, List constants) {
 
   // Define constants
-  int D = constants["D"];
+  // int D = constants["D"]; // Not currently used
   int K = constants["K"];
   int N = constants["N"];
   int V = constants["V"];
-  int P = constants["P"];
+  // int P = constants["P"]; // Not currently used
 
   // Define data
   IntegerVector doc = state["doc"];
@@ -47,7 +47,7 @@ List per_sampler_cpp(DataFrame state, List count_matrices, List priors, List con
 
   // Memory allocation and pre calculations
   int d, k, v, p, x, px, kx;
-  int new_k, new_x, new_kx, new_px;
+  int new_k, new_x, new_px;
   NumericVector u_prob(K * 2);
   double alpha_beta_pi = alpha_pi + beta_pi;
   double beta_x0_sum = betax0 * V;
