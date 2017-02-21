@@ -18,3 +18,9 @@ test_that("rcategorical", {
 })
 
 
+
+test_that("rcategorical sum(p) <= 0", {
+  set.seed(4711)
+  prob <- c(0, 0, 0)
+  expect_error(x <- PerspectiveTopicModel:::rcategorical(prob))
+})

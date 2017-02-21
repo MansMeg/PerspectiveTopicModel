@@ -17,7 +17,9 @@ int rcategorical(NumericVector p){
     cumsum += p(k);
     // Rcout << " cumsum:" << cumsum << std::endl;
   }
-
+  if (cumsum <= 0.0) {         	// log() not defined here
+    stop("sum(p) <= 0.0");
+  }
   double u = R::runif(0, 1) * cumsum;
 
   int x = 0;
