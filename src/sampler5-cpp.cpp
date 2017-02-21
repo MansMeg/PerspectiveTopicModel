@@ -53,6 +53,7 @@ List per_sampler4_cpp(DataFrame state, List count_matrices, List priors, List co
   LogicalVector prior_doc = priors["tmp_prior_doc"];
   IntegerVector prior_doc_map = priors["tmp_prior_doc_map"];
   List prior_doc_indicator = priors["tmp_prior_doc_indicator"];
+  LogicalVector perspective_flag = priors["tmp_perspective_flag"];
 
   // Memory allocation and pre calculations
   int d, k, v, p, x, px, kx;
