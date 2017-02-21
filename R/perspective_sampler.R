@@ -78,11 +78,8 @@ perspective_sampler <-function(state, priors, params){
   lmp_idx <- 2L
 
   ### Run sampler
-  if(!is.null(priors$non_zero_type_topics) | !is.null(priors$non_zero_doc_topics) | !is.null(priors$perspective_topics)){
-    per_sampler <- per_sampler5_cpp
-  } else {
-    per_sampler <- per_sampler2_cpp
-  }
+  # Choose sampler to use
+  per_sampler <- per_sampler5_cpp
 
   results <- per_sampler(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
   if(lmp[lmp_idx, 1] == params$start_iter){
