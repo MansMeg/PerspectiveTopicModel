@@ -118,5 +118,11 @@ prepare_prior_for_sampling <- function(priors, constants, vocabulary, doc_ids){
     priors$tmp_prior_doc_indicator <- list()
   }
 
+  priors$tmp_perspective_flag <- !logical(constants$K)
+  if(!is.null(priors$perspective_topics)){
+    priors$tmp_perspective_flag <- logical(constants$K)
+    priors$tmp_perspective_flag[priors$perspective_topics] <- TRUE
+  }
+
   priors
 }
