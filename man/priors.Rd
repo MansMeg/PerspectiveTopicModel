@@ -25,7 +25,7 @@ priors(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01,
 
 \item{non_zero_doc_topics}{List of priors on documents. See details.}
 
-\item{perspective_topics}{Topics that contain perspectives. If \code{NULL}, all topics has perspectives.}
+\item{perspective_topics}{Topics that contain perspectives. If \code{NULL}, all topics have perspectives.}
 }
 \value{
 A \code{priors} object
