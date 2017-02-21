@@ -51,20 +51,20 @@ priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi
     checkmate::assert_class(prior_obj$non_zero_type_topics, "list")
     checkmate::assert_character(names(prior_obj$non_zero_type_topics),
                                 len = length(prior_obj$non_zero_type_topics))
-    for(i in seq_along(non_zero_type_topics)) {
-      checkmate::assert_integerish(non_zero_type_topics[[i]])
+    for(i in seq_along(prior_obj$non_zero_type_topics)) {
+      checkmate::assert_integerish(prior_obj$non_zero_type_topics[[i]])
     }
   }
   if(!is.null(prior_obj$non_zero_doc_topics)) {
     checkmate::assert_class(prior_obj$non_zero_doc_topics, "list")
     checkmate::assert_character(names(prior_obj$non_zero_doc_topics),
                                 len = length(prior_obj$non_zero_doc_topics))
-    for(i in seq_along(non_zero_doc_topics)) {
-      checkmate::assert_integerish(non_zero_doc_topics[[i]])
+    for(i in seq_along(prior_obj$non_zero_doc_topics)) {
+      checkmate::assert_integerish(prior_obj$non_zero_doc_topics[[i]])
     }
   }
 
-  checkmate::assert_integerish(perspective_topics, null.ok = TRUE)
+  checkmate::assert_integerish(prior_obj$perspective_topics, null.ok = TRUE, lower = 0L)
 
   class(prior_obj) <- c("priors", "list")
 

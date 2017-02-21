@@ -211,7 +211,7 @@ test_that("perspective_sampler prior without perspectives", {
                    beta_pi = 0.1,
                    non_zero_doc_topics = list("1" = 1:8, "4" = 3:9),
                    non_zero_type_topics = list("2" = 1:5, "6" = 2:4),
-                   perspective_topics = integer())
+                   perspective_topics = 0L)
 
   params <- parameters(K = 10, gibbs_iter = 5L, save_state_every = 10, seed = 4711)
 
