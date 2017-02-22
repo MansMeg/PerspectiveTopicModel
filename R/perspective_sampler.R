@@ -13,7 +13,7 @@ perspective_sampler <-function(state, priors, params){
   }
 
   # Assertions
-  assert_state(state)
+  PerspectiveTopicModel:::assert_state(state)
   checkmate::assert_class(priors, "priors")
   checkmate::assert_class(params, "parameters")
 
@@ -23,7 +23,7 @@ perspective_sampler <-function(state, priors, params){
   doc_ids <- levels(state$doc)
 
   # Create constants
-  constants <- get_constants(state)
+  constants <-   PerspectiveTopicModel:::get_constants(state)
 
   # Assert
   checkmate::assert_character(vocabulary, len = constants$V)
@@ -31,10 +31,10 @@ perspective_sampler <-function(state, priors, params){
   checkmate::assert(max(state$topic) == params$K)
 
   # Assert non_zero_type_topics and non_zero_doc_topics
-  assert_non_zero(priors, constants, vocabulary, doc_ids)
+  PerspectiveTopicModel:::assert_non_zero(priors, constants, vocabulary, doc_ids)
 
   # Warnings
-  throw_state_warnings(state)
+  PerspectiveTopicModel:::throw_state_warnings(state)
 
   # Remove factors
   state$type <- as.integer(state$type)
@@ -42,7 +42,7 @@ perspective_sampler <-function(state, priors, params){
   state$doc <- as.integer(state$doc)
 
   # Init count matrices
-  count_matrices <- init_count2_cpp(state, constants)
+  count_matrices <-   PerspectiveTopicModel:::init_count2_cpp(state, constants)
 
   # Calculate extra count matrices
   count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
@@ -52,7 +52,7 @@ perspective_sampler <-function(state, priors, params){
   checkmate::assert(all(unlist(lapply(count_matrices, sum)) == constants$N))
 
   # Prepare prior on Phi and Theta for sampling
-  priors <- prepare_prior_for_sampling(priors, constants, vocabulary, doc_ids)
+  priors <-   PerspectiveTopicModel:::prepare_prior_for_sampling(priors, constants, vocabulary, doc_ids)
 
   # Handle defaults in param object
   if(is.null(params$state_path)) {
@@ -113,6 +113,7 @@ perspective_sampler <-function(state, priors, params){
   priors$tmp_prior_doc <- NULL
   priors$tmp_prior_doc_map <- NULL
   priors$tmp_prior_doc_indicator <- NULL
+  priors$tmp_perspective_flag <- NULL
   results$priors <- priors
 
   # Final output

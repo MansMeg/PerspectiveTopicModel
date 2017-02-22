@@ -182,7 +182,46 @@ test_that("perspective_sampler prior on Perspectives, Theta and Phi", {
 
   expect_true(all(res$state$topic[res$state$type == "2"] %in% 1:5))
   expect_true(all(res$state$topic[res$state$type == "6"] %in% 2:4))
+
 })
+
+
+test_that("rerun perspective_sampler with prior on Perspectives, Theta and Phi", {
+
+  set.seed(4711)
+  N <- 1000
+  D <- 17
+  V <- 31
+  K <- 10
+  P <- 3
+  state_df <- data.frame(doc = factor(sample(1:D, size = N, replace = TRUE)),
+                         type = factor(sample(1:V, size = N, replace = TRUE)),
+                         topic = sample(1:K, size = N, replace = TRUE),
+                         party = factor(sample(1:P, size = N, replace = TRUE)),
+                         perspective = sample(0:1, size = N, replace = TRUE))
+  state_df$type[nrow(state_df)] <- 2
+  state <- state_df
+  priors <- priors(alpha = 0.1,
+                   betax0 = 0.01,
+                   betax1 = 0.01,
+                   alpha_pi = 0.1,
+                   beta_pi = 0.1,
+                   non_zero_doc_topics = list("1" = 1:8, "4" = 3:9),
+                   non_zero_type_topics = list("2" = 1:5, "6" = 2:4),
+                   perspective_topics = c(1,6,9))
+
+  params <- parameters(K = 10, gibbs_iter = 5L, save_state_every = 10, seed = 4711)
+
+  params$verbose <- FALSE
+  expect_silent(res <- perspective_sampler(state = state_df, priors = priors, params))
+
+  expect_silent(priors(res$priors))
+  expect_silent(parameters(res$parameters))
+
+  expect_silent(res <- perspective_sampler(state = res$state, priors = res$priors, res$parameters))
+})
+
+
 
 
 
