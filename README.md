@@ -46,9 +46,8 @@ params <- parameters(gibbs_iter = 20L, save_state_every = 10, verbose = TRUE)
 # Run model
 res <- perspective_sampler(state_df, priors = priors, params)
 ```
+### Type priors and document prior
 
-
-## Example run
 It is also straight forward to include restrictions on the model
 
 ```
