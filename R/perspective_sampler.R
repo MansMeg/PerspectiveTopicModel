@@ -7,6 +7,7 @@
 #' @export
 perspective_sampler <-function(state, priors, params){
   # Converting
+  checkmate::assert_subset("doc", names(state))
   if(!is.factor(state$doc)) {
     state$doc <- as.factor(state$doc)
     warning("state$doc is not a factor")
