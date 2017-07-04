@@ -96,10 +96,11 @@ test_that("log_marginal_posterior manual check", {
                    betax1 = 0.01,
                    alpha_pi = 0.15,
                    beta_pi = 0.2)
+  priors <- PerspectiveTopicModel:::get_priors_for_iteration(priors, 0L)
 
   params <- parameters(K = 10, gibbs_iter = 100L, save_state_every = 1000, seed = 4711, verbose = FALSE)
 
-  count_matrices <- init_count2_cpp(state_df, constants)
+  count_matrices <- PerspectiveTopicModel:::init_count2_cpp(state_df, constants)
   count_matrices[["n_pk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 2), sum))
   count_matrices[["n_xk"]] <- t(apply(count_matrices$n_kpx, MARGIN=c(1, 3), sum))
 
@@ -126,7 +127,7 @@ test_that("log_marginal_posterior manual check", {
 
 
   expect_silent(
-    lmp0 <- log_marginal_posterior_computation(count_matrices, priors)
+    lmp0 <- PerspectiveTopicModel:::log_marginal_posterior_computation(count_matrices, priors)
   )
 
   expect_equal(lmp0, man_lmp, tolerance = 0.01)
