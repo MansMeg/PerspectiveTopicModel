@@ -53,7 +53,7 @@ perspective_sampler <-function(state, priors, params){
   checkmate::assert(all(unlist(lapply(count_matrices, sum)) == constants$N))
 
   # Prepare prior on Phi and Theta for sampling
-  priors <-   PerspectiveTopicModel:::prepare_prior_for_sampling(priors, constants, vocabulary, doc_ids)
+  priors <- PerspectiveTopicModel:::prepare_prior_for_sampling(priors, constants, vocabulary, doc_ids)
 
   # Handle defaults in param object
   if(is.null(params$state_path)) {
