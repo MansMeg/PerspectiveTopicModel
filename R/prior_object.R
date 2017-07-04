@@ -164,7 +164,6 @@ get_priors_for_iteration <- function(priors, iteration){
     it_priors$betax1 <- priors$betax1[pos]
     it_priors$alpha_pi <- priors$alpha_pi[pos]
     it_priors$beta_pi <- priors$beta_pi[pos]
-    it_priors <- priors(it_priors)
   }
 
   class(it_priors) <- c("iteration_prior", class(priors))

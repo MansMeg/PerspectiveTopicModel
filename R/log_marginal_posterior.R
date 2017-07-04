@@ -8,7 +8,7 @@
 #' @keywords Internal
 log_marginal_posterior_computation <- function(count_matrices, priors){
   # Assertions
-  checkmate::assert_class(priors, "priors")
+  checkmate::assert_class(priors, "iteration_prior")
   checkmate::assert_names(names(count_matrices), permutation.of = c("n_dk", "n_kvpx", "n_kpx", "n_pk", "n_xk" ))
 
   # Create data structures
