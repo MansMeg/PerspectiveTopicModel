@@ -4,8 +4,8 @@
 #' @param alpha The alpha parameter
 #' @param betax0 The betax0 parameter
 #' @param betax1 The betax1 parameter
-#' @param alpha_pi The alpha_pi parameter
-#' @param beta_pi The beta_pi parameter
+#' @param alpha_pi The alpha_pi parameter (prior weight on perspective)
+#' @param beta_pi The beta_pi parameter (prior weight on non-perspective)
 #' @param non_zero_type_topics List of priors on wordtypes. See details.
 #' @param non_zero_doc_topics List of priors on documents. See details.
 #' @param perspective_topics Topics that contain perspectives. If \code{NULL}, all topics have perspectives. If \code{0}, no topic has perspectives.
