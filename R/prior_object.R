@@ -154,6 +154,19 @@ get_priors_for_iteration <- function(priors, iteration){
   checkmate::assert_class(priors, "priors")
   checkmate::assert_integerish(iteration, len = 1)
 
+  it_priors <- priors
 
+  if(!is.null(priors$annealing_iterations)){
+    pos <- max(which(priors$annealing_iterations <= iteration))
+    it_priors$annealing_iterations <- NULL
+    it_priors$alpha <- priors$alpha[pos]
+    it_priors$betax0 <- priors$betax0[pos]
+    it_priors$betax1 <- priors$betax1[pos]
+    it_priors$alpha_pi <- priors$alpha_pi[pos]
+    it_priors$beta_pi <- priors$beta_pi[pos]
+    it_priors <- priors(it_priors)
+  }
+
+  class(it_priors) <- c("iteration_prior", class(priors))
   it_priors
 }
