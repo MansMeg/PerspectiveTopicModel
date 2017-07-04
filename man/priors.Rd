@@ -6,7 +6,8 @@
 \usage{
 priors(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01,
   alpha_pi = 0.1, beta_pi = 0.1, non_zero_type_topics = NULL,
-  non_zero_doc_topics = NULL, perspective_topics = NULL)
+  non_zero_doc_topics = NULL, perspective_topics = NULL,
+  annealing_iterations = NULL)
 }
 \arguments{
 \item{x}{NULL or a list with priors to set}
@@ -17,15 +18,17 @@ priors(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01,
 
 \item{betax1}{The betax1 parameter}
 
-\item{alpha_pi}{The alpha_pi parameter}
+\item{alpha_pi}{The alpha_pi parameter (prior weight on perspective)}
 
-\item{beta_pi}{The beta_pi parameter}
+\item{beta_pi}{The beta_pi parameter (prior weight on non-perspective)}
 
 \item{non_zero_type_topics}{List of priors on wordtypes. See details.}
 
 \item{non_zero_doc_topics}{List of priors on documents. See details.}
 
 \item{perspective_topics}{Topics that contain perspectives. If \code{NULL}, all topics have perspectives. If \code{0}, no topic has perspectives.}
+
+\item{annealing_iterations}{If simulated annealing is used. Indicate at which iteration the same position in hyper-parameter prior vector that should be used.}
 }
 \value{
 A \code{priors} object
