@@ -260,3 +260,50 @@ test_that("perspective_sampler prior without perspectives", {
   expect_true(all(res$state$perspective == 0))
 
 })
+
+
+
+
+test_that("perspective_sampler with simulated annealing", {
+
+  set.seed(4711)
+  N <- 1000
+  D <- 17
+  V <- 31
+  K <- 10
+  P <- 3
+  state_df <- data.frame(doc = factor(sample(1:D, size = N, replace = TRUE)),
+                         type = factor(sample(1:V, size = N, replace = TRUE)),
+                         topic = sample(1:K, size = N, replace = TRUE),
+                         party = factor(sample(1:P, size = N, replace = TRUE)),
+                         perspective = sample(0:1, size = N, replace = TRUE))
+  state_df$type[nrow(state_df)] <- 2
+  state <- state_df
+  expect_silent(
+  priors <- priors(annealing_iterations = c(1, 2, 3, 4),
+                   alpha = 10 ^ c(3, 2, 1, 0) * 0.1,
+                   betax0 = 10 ^ c(3, 2, 1, 0) * 0.01,
+                   betax1 = 10 ^ c(3, 2, 1, 0) *  0.01,
+                   alpha_pi = 10 ^ c(3, 2, 1, 0) * 0.1,
+                   beta_pi = 10 ^ c(3, 2, 1, 0) * 0.1,
+                   non_zero_doc_topics = list("1" = 1:8, "4" = 3:9),
+                   non_zero_type_topics = list("2" = 1:5, "6" = 2:4))
+  )
+
+  expect_error(
+    priors <- priors(annealing_iterations = c(1, 2, 3, 4),
+                     alpha = 10 ^ c(3, 2, 1, 0) * 0.1,
+                     betax0 = c(4, 3, 2, 1) * 0.01,
+                     betax1 = c(4, 3, 2) *  0.01,
+                     alpha_pi = c(4, 3, 2, 1) * 0.1,
+                     beta_pi = c(4, 3, 2, 1) * 0.1,
+                     non_zero_doc_topics = list("1" = 1:8, "4" = 3:9),
+                     non_zero_type_topics = list("2" = 1:5, "6" = 2:4))
+  )
+
+  params <- parameters(K = 10, gibbs_iter = 8L, save_state_every = 10, seed = 4711)
+  params$verbose <- FALSE
+
+  # expect_silent(res <- perspective_sampler(state = state_df, priors = priors, params))
+
+})
