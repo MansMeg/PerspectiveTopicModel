@@ -74,25 +74,28 @@ perspective_sampler <-function(state, priors, params){
   }
 
   ### Setup log marginal posterior
-  lmp <- setup_log_marginal_posterior_table(params)
-  lmp[1,2] <- log_marginal_posterior_computation(count_matrices, priors)
+  it_priors <- PerspectiveTopicModel:::get_priors_for_iteration(priors, iteration = params$start_iter - 1L)
+  lmp <- PerspectiveTopicModel:::setup_log_marginal_posterior_table(params)
+  lmp[1,2] <- PerspectiveTopicModel:::log_marginal_posterior_computation(count_matrices, priors = it_priors)
   lmp_idx <- 2L
 
   ### Run sampler
   # Choose sampler to use
   per_sampler <- per_sampler5_cpp
 
-  results <- per_sampler(state = state, count_matrices = count_matrices, priors = priors, constants = constants)
+  it_priors <- PerspectiveTopicModel:::get_priors_for_iteration(priors, iteration = params$start_iter)
+  results <- per_sampler(state = state, count_matrices = count_matrices, priors = it_priors, constants = constants)
   if(lmp[lmp_idx, 1] == params$start_iter){
-    lmp[lmp_idx, 2] <- log_marginal_posterior_computation(results$count_matrices, priors)
+    lmp[lmp_idx, 2] <- log_marginal_posterior_computation(results$count_matrices, it_priors)
     lmp_idx <- lmp_idx + 1L
   }
 
   for (step in (params$start_iter + 1):params$gibbs_iter){
-    results <- per_sampler(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants)
+    it_priors <- PerspectiveTopicModel:::get_priors_for_iteration(priors, iteration = step)
+    results <- per_sampler(state = results$state, count_matrices = results$count_matrices, priors = it_priors, constants = constants)
 
     if(lmp[lmp_idx, 1] == step){
-      lmp[lmp_idx, 2] <- log_marginal_posterior_computation(results$count_matrices, priors)
+      lmp[lmp_idx, 2] <- log_marginal_posterior_computation(results$count_matrices, it_priors)
       lmp_idx <- lmp_idx + 1L
     }
 
