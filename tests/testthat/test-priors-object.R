@@ -32,7 +32,7 @@ test_that("priors constructor", {
 test_that("get_prior_for_iteration", {
 
   expect_silent(
-    priors_sim <- priors(annealing_iterations = c(1, 2, 3, 4),
+    priors_sim <- priors(annealing_iterations = c(0, 2, 3, 4),
                          alpha = 10 ^ c(3, 2, 1, 0) * 0.1,
                          betax0 = 10 ^ c(3, 2, 1, 0) * 0.01,
                          betax1 = 10 ^ c(3, 2, 1, 0) *  0.01,
@@ -41,6 +41,14 @@ test_that("get_prior_for_iteration", {
                          non_zero_doc_topics = list("1" = 1:8, "4" = 3:9),
                          non_zero_type_topics = list("2" = 1:5, "6" = 2:4))
   )
+
+  expect_silent(pr0 <- PerspectiveTopicModel:::get_priors_for_iteration(priors = priors_sim, iteration = 0))
+  expect_equal(pr0$alpha, 100)
+  expect_equal(pr0$betax0, 10)
+  expect_equal(pr0$betax1, 10)
+  expect_equal(pr0$alpha_pi, 100)
+  expect_equal(pr0$beta_pi, 100)
+  expect_null(pr0$annealing_iterations)
 
   expect_silent(pr1 <- PerspectiveTopicModel:::get_priors_for_iteration(priors = priors_sim, iteration = 1))
   expect_equal(pr1$alpha, 100)

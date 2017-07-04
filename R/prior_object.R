@@ -51,8 +51,8 @@ priors <- function(x = NULL, alpha = 0.1, betax0 = 0.01, betax1 = 0.01, alpha_pi
     checkmate::assert_number(prior_obj$alpha_pi, lower = 0.000000001)
     checkmate::assert_number(prior_obj$beta_pi, lower = 0.000000001)
   } else {
-    checkmate::assert_integerish(prior_obj$annealing_iterations, lower = 1)
-    checkmate::assert(prior_obj$annealing_iterations[1] == 1)
+    checkmate::assert_integerish(prior_obj$annealing_iterations, lower = 0)
+    checkmate::assert(prior_obj$annealing_iterations[1] == 0)
     checkmate::assert_numeric(prior_obj$alpha, lower = 0.000000001, len = length(prior_obj$annealing_iterations))
     checkmate::assert_numeric(prior_obj$betax0, lower = 0.000000001, len = length(prior_obj$annealing_iterations))
     checkmate::assert_numeric(prior_obj$betax1, lower = 0.000000001, len = length(prior_obj$annealing_iterations))
@@ -152,7 +152,7 @@ prepare_prior_for_sampling <- function(priors, constants, vocabulary, doc_ids){
 #' @keywords Internal
 get_priors_for_iteration <- function(priors, iteration){
   checkmate::assert_class(priors, "priors")
-  checkmate::assert_integerish(iteration, len = 1)
+  checkmate::assert_integerish(iteration, len = 1, lower = 0)
 
   it_priors <- priors
 
