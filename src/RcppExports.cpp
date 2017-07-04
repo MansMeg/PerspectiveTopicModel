@@ -124,3 +124,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+
+static const R_CallMethodDef CallEntries[] = {
+    {"PerspectiveTopicModel_init_count_cpp", (DL_FUNC) &PerspectiveTopicModel_init_count_cpp, 2},
+    {"PerspectiveTopicModel_init_count2_cpp", (DL_FUNC) &PerspectiveTopicModel_init_count2_cpp, 2},
+    {"PerspectiveTopicModel_pos3d", (DL_FUNC) &PerspectiveTopicModel_pos3d, 4},
+    {"PerspectiveTopicModel_rcategorical", (DL_FUNC) &PerspectiveTopicModel_rcategorical, 1},
+    {"PerspectiveTopicModel_per_sampler_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler_cpp, 4},
+    {"PerspectiveTopicModel_per_sampler2_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler2_cpp, 4},
+    {"PerspectiveTopicModel_per_sampler3_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler3_cpp, 4},
+    {"PerspectiveTopicModel_per_sampler4_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler4_cpp, 4},
+    {"PerspectiveTopicModel_per_sampler5_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler5_cpp, 4},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_PerspectiveTopicModel(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}
