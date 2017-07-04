@@ -29,7 +29,7 @@ List init_count2_cpp(DataFrame state, List constants) {
 
   //  n_vkpx <- array(0L, dim = c(const$V, const$K, const$P + 1))
   //  n_kpx <- array(0L, dim = c(const$K, const$P, 2))
-  int d,k,v,p,x,px,po;
+  int d,k,v,p,x,px;
 
   for (int i = 0; i < N; ++i) {
     d = doc[i] - 1;
@@ -40,7 +40,7 @@ List init_count2_cpp(DataFrame state, List constants) {
     px = x * (p + 1);
 
     n_dk(d, k) += 1;
-    // Rcout << " po" << po << std::endl;
+
     n_kvpx(pos3d(k, v, px, n_kvpx_dims)) += 1;
     n_kpx(pos3d(k, p, x, n_kpx_dims)) += 1;
   }
