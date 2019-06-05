@@ -14,5 +14,6 @@ Imports:
     dplyr,
     readr
 LinkingTo: Rcpp
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.0
 Suggests: testthat
+Encoding: UTF-8
