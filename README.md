@@ -141,12 +141,15 @@ tidy_pride$doc <- as.factor(tidy_pride$doc)
 tidy_pride$party <- as.factor(tidy_pride$party)
 
 # Set parameters
+# Note that here we only use 20 Gibbs iterations, for real analysis probably 1000 iterations are needed
+# Check res$lmp (log marginal posterior) to asses convergence over time
 params <- parameters(gibbs_iter = 20L, K = K, verbose = TRUE)
 
 # Run model
 res <- perspective_sampler(tidy_pride, priors = priors, params)
 
 # The resulting draw from the posterior is stored in res$state
+# The topic indicators can be used to analyze the results
 head(res$state)
 ```
 
