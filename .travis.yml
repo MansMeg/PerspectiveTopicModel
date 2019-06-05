@@ -2,7 +2,7 @@
 language: r
 sudo: required
 compiler: clang
-cache: packages
+# cache: packages
 
 apt_packages:
     - libv8-dev
