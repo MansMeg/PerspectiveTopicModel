@@ -2,11 +2,11 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 init_count_cpp <- function(state, constants) {
-    .Call('PerspectiveTopicModel_init_count_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
+    .Call('_PerspectiveTopicModel_init_count_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
 }
 
 init_count2_cpp <- function(state, constants) {
-    .Call('PerspectiveTopicModel_init_count2_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
+    .Call('_PerspectiveTopicModel_init_count2_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
 }
 
 #' @title
@@ -20,7 +20,7 @@ init_count2_cpp <- function(state, constants) {
 #' @param dims integer vector of size 3 defining the array
 #'
 pos3d <- function(x, y, z, dims) {
-    .Call('PerspectiveTopicModel_pos3d', PACKAGE = 'PerspectiveTopicModel', x, y, z, dims)
+    .Call('_PerspectiveTopicModel_pos3d', PACKAGE = 'PerspectiveTopicModel', x, y, z, dims)
 }
 
 #' @title
@@ -31,7 +31,7 @@ pos3d <- function(x, y, z, dims) {
 #' @param p a vector of (possoble unnormalized) probabilities to sample from
 #'
 rcategorical <- function(p) {
-    .Call('PerspectiveTopicModel_rcategorical', PACKAGE = 'PerspectiveTopicModel', p)
+    .Call('_PerspectiveTopicModel_rcategorical', PACKAGE = 'PerspectiveTopicModel', p)
 }
 
 #' @title
@@ -43,7 +43,7 @@ rcategorical <- function(p) {
 #' @param constants A list of constants
 #'
 per_sampler_cpp <- function(state, count_matrices, priors, constants) {
-    .Call('PerspectiveTopicModel_per_sampler_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
+    .Call('_PerspectiveTopicModel_per_sampler_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
 #' @title
@@ -58,7 +58,7 @@ per_sampler_cpp <- function(state, count_matrices, priors, constants) {
 #' @param constants A list of constants
 #'
 per_sampler2_cpp <- function(state, count_matrices, priors, constants) {
-    .Call('PerspectiveTopicModel_per_sampler2_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
+    .Call('_PerspectiveTopicModel_per_sampler2_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
 #' @title
@@ -73,7 +73,7 @@ per_sampler2_cpp <- function(state, count_matrices, priors, constants) {
 #' @param constants A list of constants
 #'
 per_sampler3_cpp <- function(state, count_matrices, priors, constants) {
-    .Call('PerspectiveTopicModel_per_sampler3_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
+    .Call('_PerspectiveTopicModel_per_sampler3_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
 #' @title
@@ -88,7 +88,7 @@ per_sampler3_cpp <- function(state, count_matrices, priors, constants) {
 #' @param constants A list of constants
 #'
 per_sampler4_cpp <- function(state, count_matrices, priors, constants) {
-    .Call('PerspectiveTopicModel_per_sampler4_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
+    .Call('_PerspectiveTopicModel_per_sampler4_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
 #' @title
@@ -103,6 +103,6 @@ per_sampler4_cpp <- function(state, count_matrices, priors, constants) {
 #' @param constants A list of constants
 #'
 per_sampler5_cpp <- function(state, count_matrices, priors, constants) {
-    .Call('PerspectiveTopicModel_per_sampler5_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
+    .Call('_PerspectiveTopicModel_per_sampler5_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 

@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // init_count_cpp
 List init_count_cpp(DataFrame state, List constants);
-RcppExport SEXP PerspectiveTopicModel_init_count_cpp(SEXP stateSEXP, SEXP constantsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_init_count_cpp(SEXP stateSEXP, SEXP constantsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // init_count2_cpp
 List init_count2_cpp(DataFrame state, List constants);
-RcppExport SEXP PerspectiveTopicModel_init_count2_cpp(SEXP stateSEXP, SEXP constantsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_init_count2_cpp(SEXP stateSEXP, SEXP constantsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,7 +31,7 @@ END_RCPP
 }
 // pos3d
 int pos3d(int x, int y, int z, IntegerVector dims);
-RcppExport SEXP PerspectiveTopicModel_pos3d(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP dimsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_pos3d(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP dimsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -45,7 +45,7 @@ END_RCPP
 }
 // rcategorical
 int rcategorical(NumericVector p);
-RcppExport SEXP PerspectiveTopicModel_rcategorical(SEXP pSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_rcategorical(SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -56,7 +56,7 @@ END_RCPP
 }
 // per_sampler_cpp
 List per_sampler_cpp(DataFrame state, List count_matrices, List priors, List constants);
-RcppExport SEXP PerspectiveTopicModel_per_sampler_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_per_sampler_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -70,7 +70,7 @@ END_RCPP
 }
 // per_sampler2_cpp
 List per_sampler2_cpp(DataFrame state, List count_matrices, List priors, List constants);
-RcppExport SEXP PerspectiveTopicModel_per_sampler2_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_per_sampler2_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -84,7 +84,7 @@ END_RCPP
 }
 // per_sampler3_cpp
 List per_sampler3_cpp(DataFrame state, List count_matrices, List priors, List constants);
-RcppExport SEXP PerspectiveTopicModel_per_sampler3_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_per_sampler3_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -98,7 +98,7 @@ END_RCPP
 }
 // per_sampler4_cpp
 List per_sampler4_cpp(DataFrame state, List count_matrices, List priors, List constants);
-RcppExport SEXP PerspectiveTopicModel_per_sampler4_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_per_sampler4_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -112,7 +112,7 @@ END_RCPP
 }
 // per_sampler5_cpp
 List per_sampler5_cpp(DataFrame state, List count_matrices, List priors, List constants);
-RcppExport SEXP PerspectiveTopicModel_per_sampler5_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
+RcppExport SEXP _PerspectiveTopicModel_per_sampler5_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -126,15 +126,15 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"PerspectiveTopicModel_init_count_cpp", (DL_FUNC) &PerspectiveTopicModel_init_count_cpp, 2},
-    {"PerspectiveTopicModel_init_count2_cpp", (DL_FUNC) &PerspectiveTopicModel_init_count2_cpp, 2},
-    {"PerspectiveTopicModel_pos3d", (DL_FUNC) &PerspectiveTopicModel_pos3d, 4},
-    {"PerspectiveTopicModel_rcategorical", (DL_FUNC) &PerspectiveTopicModel_rcategorical, 1},
-    {"PerspectiveTopicModel_per_sampler_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler_cpp, 4},
-    {"PerspectiveTopicModel_per_sampler2_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler2_cpp, 4},
-    {"PerspectiveTopicModel_per_sampler3_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler3_cpp, 4},
-    {"PerspectiveTopicModel_per_sampler4_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler4_cpp, 4},
-    {"PerspectiveTopicModel_per_sampler5_cpp", (DL_FUNC) &PerspectiveTopicModel_per_sampler5_cpp, 4},
+    {"_PerspectiveTopicModel_init_count_cpp", (DL_FUNC) &_PerspectiveTopicModel_init_count_cpp, 2},
+    {"_PerspectiveTopicModel_init_count2_cpp", (DL_FUNC) &_PerspectiveTopicModel_init_count2_cpp, 2},
+    {"_PerspectiveTopicModel_pos3d", (DL_FUNC) &_PerspectiveTopicModel_pos3d, 4},
+    {"_PerspectiveTopicModel_rcategorical", (DL_FUNC) &_PerspectiveTopicModel_rcategorical, 1},
+    {"_PerspectiveTopicModel_per_sampler_cpp", (DL_FUNC) &_PerspectiveTopicModel_per_sampler_cpp, 4},
+    {"_PerspectiveTopicModel_per_sampler2_cpp", (DL_FUNC) &_PerspectiveTopicModel_per_sampler2_cpp, 4},
+    {"_PerspectiveTopicModel_per_sampler3_cpp", (DL_FUNC) &_PerspectiveTopicModel_per_sampler3_cpp, 4},
+    {"_PerspectiveTopicModel_per_sampler4_cpp", (DL_FUNC) &_PerspectiveTopicModel_per_sampler4_cpp, 4},
+    {"_PerspectiveTopicModel_per_sampler5_cpp", (DL_FUNC) &_PerspectiveTopicModel_per_sampler5_cpp, 4},
     {NULL, NULL, 0}
 };
 

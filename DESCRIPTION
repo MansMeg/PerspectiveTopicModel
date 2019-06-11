@@ -7,8 +7,8 @@ Maintainer: mans Magnusson <mans.magnusson@liu.se>
 Description: Samples different perspective topic models.
 License: BSD_2_clause + file LICENSE
 LazyData: TRUE
-Imports:
-    Rcpp (>= 0.12.8),
+Imports: 
+    Rcpp (>= 1.0.1),
     checkmate,
     stringr,
     dplyr,
