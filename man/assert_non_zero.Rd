@@ -19,4 +19,3 @@ assert_non_zero(priors, constants, vocabulary, doc_ids)
 Assert a non_zero_type_topics list and a non_zero_doc_topics list
 }
 \keyword{Internal}
-

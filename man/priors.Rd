@@ -40,4 +40,3 @@ Constructor for prior object
 The parameter \code{non_zero_type_topics} is a list named with types with prior settings. Each element is a type that contains a vector of non_zero probability topics.
 The parameter \code{non_zero_doc_topics} List of priors on documents. See details.
 }
-

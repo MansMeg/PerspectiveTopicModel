@@ -13,4 +13,3 @@ throw_state_warnings(state)
 Checks state file and trow warnings for potential problems
 }
 \keyword{Internal}
-

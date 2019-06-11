@@ -18,4 +18,3 @@ per_sampler5_cpp(state, count_matrices, priors, constants)
 \description{
 C++ Cache optimized Perspective sampler with prior on Phi and Theta
 }
-

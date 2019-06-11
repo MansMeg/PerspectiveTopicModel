@@ -21,4 +21,3 @@ write_mallet_statefile(state, alpha, beta, state_file)
 \description{
 Write a Mallet state from R
 }
-

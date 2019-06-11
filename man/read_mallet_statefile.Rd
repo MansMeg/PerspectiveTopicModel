@@ -20,4 +20,3 @@ The return value depends on \code{type}.
 \description{
 This function reads a mallet file into R. the purpose is to enable the full strenght of R to visualize and postprocess sampled data from mallet
 }
-

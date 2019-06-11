@@ -13,4 +13,3 @@ setup_log_marginal_posterior_table(params)
 Set up a table for when to calculate log marginal posterior
 }
 \keyword{Internal}
-

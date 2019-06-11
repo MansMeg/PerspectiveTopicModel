@@ -19,4 +19,3 @@ prepare_prior_for_sampling(priors, constants, vocabulary, doc_ids)
 Prepare the prior objects for sampling
 }
 \keyword{Internal}
-

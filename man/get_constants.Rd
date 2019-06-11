@@ -16,4 +16,3 @@ a \code{state_constants} object.
 Extract constants from a state object
 }
 \keyword{Internal}
-

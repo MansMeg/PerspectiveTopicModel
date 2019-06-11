@@ -34,4 +34,3 @@ A \code{parameter} object
 \description{
 Constructor for parameter object
 }
-

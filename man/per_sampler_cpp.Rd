@@ -19,7 +19,8 @@ per_sampler_r(state, count_matrices, priors, constants)
 \item{constants}{A list of constants}
 }
 \description{
+C++ Perspective sampler
+
 Perspective sampler (implemented in R as a cross-check)
 }
 \keyword{Internal}
-

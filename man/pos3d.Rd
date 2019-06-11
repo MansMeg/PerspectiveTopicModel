@@ -18,4 +18,3 @@ pos3d(x, y, z, dims)
 \description{
 Access positions in an vector representation of a 3D array
 }
-

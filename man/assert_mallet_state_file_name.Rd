@@ -13,4 +13,3 @@ assert_mallet_state_file_name(file_path)
 Assert that \code{file_path} is a valide mallet state file
 }
 \keyword{internal}
-

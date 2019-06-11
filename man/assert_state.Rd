@@ -13,4 +13,3 @@ assert_state(x)
 Assert a perspective topic state object
 }
 \keyword{Internal}
-

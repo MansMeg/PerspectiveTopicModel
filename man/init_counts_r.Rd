@@ -18,4 +18,3 @@ Initialize count matrices (R implementation)
 Initialization of n_dk, n_vkpx, n_kpx matrices
 }
 \keyword{Internal}
-

@@ -18,4 +18,3 @@ Get prior for iteration
 When running simulated annealing we have extract one specific prior per iteration.
 }
 \keyword{Internal}
-

@@ -12,4 +12,3 @@ rcategorical(p)
 \description{
 Sample a categorical variable from an unnormalized proportion
 }
-

@@ -14,4 +14,3 @@ log_marginal_posterior(state, priors)
 \description{
 Compute log marginal posterior for a state file
 }
-

@@ -16,4 +16,3 @@ perspective_sampler(state, priors, params)
 \description{
 Sample perspective in R
 }
-

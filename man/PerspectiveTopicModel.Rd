@@ -8,4 +8,3 @@
 \description{
 Package to run the perspective topic model
 }
-

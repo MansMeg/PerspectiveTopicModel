@@ -15,4 +15,3 @@ log_marginal_posterior_computation(count_matrices, priors)
 Compute the log marginal posterior for the perspective topic model.
 }
 \keyword{Internal}
-
