@@ -1,6 +1,6 @@
 # Native R Travis Github
 language: r
-sudo: required
+r: release
 compiler: clang
 cache: packages
 
