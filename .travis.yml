@@ -2,23 +2,10 @@
 language: r
 sudo: required
 compiler: clang
-# cache: packages
-
-apt_packages:
-    - libv8-dev
-
-#env:
-#  - secure: "encrypted GITHUB_TRAVIS_TOKEN string"
+cache: packages
 
 # Be strict when checking our package
 warnings_are_errors: true
-
-# Specify folder
-
-#r_binary_packages:
-#  - rjags
-#after_success:
-#  - Rscript -e 'covr::coveralls()'
 
 notifications:
   email:
