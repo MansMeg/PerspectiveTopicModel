@@ -4,10 +4,17 @@
 \alias{parameters}
 \title{Constructor for parameter object}
 \usage{
-parameters(x = NULL, K = 10, start_iter = 1L, gibbs_iter = 10L,
-  log_marginal_posterior_every = 1L, save_state_every = NULL,
-  state_path = "perspective_", seed = as.integer(Sys.time()),
-  verbose = TRUE)
+parameters(
+  x = NULL,
+  K = 10,
+  start_iter = 1L,
+  gibbs_iter = 10L,
+  log_marginal_posterior_every = 1L,
+  save_state_every = NULL,
+  state_path = "perspective_",
+  seed = as.integer(Sys.time()),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{NULL or a list with priors to set}

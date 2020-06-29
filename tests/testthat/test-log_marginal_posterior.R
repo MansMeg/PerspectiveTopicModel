@@ -47,7 +47,7 @@ test_that("log_marginal_posterior", {
   expect_silent(
     lmp0b <- PerspectiveTopicModel:::log_marginal_posterior(state_df, priors)
   )
-  expect_equal(lmp0, -8260.744, tolerance = 0.01)
+  expect_equal(lmp0, -8173.142, tolerance = 0.01) # the actual number is taken from
   expect_equal(lmp0, lmp0b, tolerance = 0.01)
 
   # Run 100 iterations and check lmp < lmp0
