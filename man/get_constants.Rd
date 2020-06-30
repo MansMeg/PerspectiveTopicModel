@@ -2,9 +2,12 @@
 % Please edit documentation in R/get_constants.R
 \name{get_constants}
 \alias{get_constants}
+\alias{get_lda_constants}
 \title{Extract constants from a state object}
 \usage{
 get_constants(state)
+
+get_lda_constants(state)
 }
 \arguments{
 \item{state}{a \code{state} object.}

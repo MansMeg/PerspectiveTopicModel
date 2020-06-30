@@ -5,6 +5,20 @@
 
 using namespace Rcpp;
 
+// collapsed_sampler_cpp
+List collapsed_sampler_cpp(DataFrame state, List count_matrices, List priors, List constants);
+RcppExport SEXP _PerspectiveTopicModel_collapsed_sampler_cpp(SEXP stateSEXP, SEXP count_matricesSEXP, SEXP priorsSEXP, SEXP constantsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DataFrame >::type state(stateSEXP);
+    Rcpp::traits::input_parameter< List >::type count_matrices(count_matricesSEXP);
+    Rcpp::traits::input_parameter< List >::type priors(priorsSEXP);
+    Rcpp::traits::input_parameter< List >::type constants(constantsSEXP);
+    rcpp_result_gen = Rcpp::wrap(collapsed_sampler_cpp(state, count_matrices, priors, constants));
+    return rcpp_result_gen;
+END_RCPP
+}
 // init_count_cpp
 List init_count_cpp(DataFrame state, List constants);
 RcppExport SEXP _PerspectiveTopicModel_init_count_cpp(SEXP stateSEXP, SEXP constantsSEXP) {
@@ -126,6 +140,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_PerspectiveTopicModel_collapsed_sampler_cpp", (DL_FUNC) &_PerspectiveTopicModel_collapsed_sampler_cpp, 4},
     {"_PerspectiveTopicModel_init_count_cpp", (DL_FUNC) &_PerspectiveTopicModel_init_count_cpp, 2},
     {"_PerspectiveTopicModel_init_count2_cpp", (DL_FUNC) &_PerspectiveTopicModel_init_count2_cpp, 2},
     {"_PerspectiveTopicModel_pos3d", (DL_FUNC) &_PerspectiveTopicModel_pos3d, 4},
