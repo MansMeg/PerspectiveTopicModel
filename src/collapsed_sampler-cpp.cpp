@@ -30,6 +30,8 @@ List collapsed_sampler_cpp(DataFrame state, List count_matrices, List priors, Li
   IntegerVector topic = state["topic"];
 
   // Define counts
+  // Count matrices is only modify in place since they are not used
+  // outside the API function.
   IntegerMatrix n_dk = count_matrices["n_dk"];
   IntegerMatrix n_kv = count_matrices["n_kv"];
   IntegerVector n_k = count_matrices["n_k"];

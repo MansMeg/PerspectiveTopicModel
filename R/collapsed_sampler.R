@@ -11,6 +11,9 @@ collapsed_sampler <- function(state, priors, params){
   assert_lda_prior(priors)
   checkmate::assert_class(params, "parameters")
 
+  # Do a deep copy of topic assignments
+  state$topic <- sapply(state$topic, FUN = function(x) x)
+
   # Extract vocabulary
   vocabulary <- levels(state$type)
   doc_ids <- levels(state$doc)
