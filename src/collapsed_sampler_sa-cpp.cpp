@@ -46,7 +46,7 @@ List collapsed_sampler_sa_cpp(DataFrame state, List count_matrices, List priors,
   int new_k;
   NumericVector u_prob(K);
   double betaV = beta * V;
-  double tauV = beta * V;
+  double tauV = tau * V;
 
   for (int i = 0; i < N; ++i) {
     // Rcout << "Type: " << v << " D: " << d << std::endl;
@@ -64,6 +64,7 @@ List collapsed_sampler_sa_cpp(DataFrame state, List count_matrices, List priors,
       u_prob[j] = (tau * (n_kv(j, v) + beta) - tau + 1) / (tau * (n_k(j) + betaV) - tauV + V);
       u_prob[j] *= (tau * (n_dk(d, j) + alpha) - tau + 1);
     }
+    // if(i == 0) Rf_PrintValue(u_prob);
 
     // Draw indicator
     new_k = rcategorical(u_prob) - 1; // rcatgorical is R indexed
@@ -75,6 +76,8 @@ List collapsed_sampler_sa_cpp(DataFrame state, List count_matrices, List priors,
     n_dk(d, new_k) += 1;
     n_kv(new_k, v) += 1;
     n_k(new_k) += 1;
+
+
   }
 
   // Return List

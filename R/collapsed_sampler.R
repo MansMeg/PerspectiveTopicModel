@@ -11,6 +11,9 @@ collapsed_sampler <- function(state, priors, params){
   assert_lda_prior(priors)
   checkmate::assert_class(params, "parameters")
 
+  # Set seed
+  set.seed(params$seed)
+
   # Do a deep copy of topic assignments
   state$topic <- sapply(state$topic, FUN = function(x) x)
 

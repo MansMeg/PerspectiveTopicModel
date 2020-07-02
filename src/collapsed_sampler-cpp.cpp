@@ -62,6 +62,7 @@ List collapsed_sampler_cpp(DataFrame state, List count_matrices, List priors, Li
       u_prob[j] = (n_kv(j, v) + beta) / (n_k(j) + beta_sum);
       u_prob[j] *= (n_dk(d, j) + alpha);
     }
+    // if(i == 0) Rf_PrintValue(u_prob);
 
     // Draw indicator
     new_k = rcategorical(u_prob) - 1; // rcatgorical is R indexed
