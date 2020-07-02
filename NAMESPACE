@@ -2,6 +2,8 @@
 
 export(collapsed_sampler)
 export(collapsed_sampler_cpp)
+export(collapsed_sampler_sa_cpp)
+export(collapsed_sampler_simulated_annealing)
 export(init_count_matrices_lda)
 export(log_marginal_posterior)
 export(log_marginal_posterior_lda)

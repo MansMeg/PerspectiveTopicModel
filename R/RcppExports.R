@@ -17,6 +17,23 @@ collapsed_sampler_cpp <- function(state, count_matrices, priors, constants) {
     .Call('_PerspectiveTopicModel_collapsed_sampler_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants)
 }
 
+#' @title
+#' Collapsed Gibbs sampler using Simulated Annealing
+#'
+#' @description
+#' The Collapsed Gibbs sampler with Simulated annealing
+#'
+#' @param state a perspective model state file
+#' @param count_matrices A list of count matrices
+#' @param priors A list of priors
+#' @param constants A list of constants
+#' @param tau the annealing parameter for the iteration
+#'
+#' @export
+collapsed_sampler_sa_cpp <- function(state, count_matrices, priors, constants, tau) {
+    .Call('_PerspectiveTopicModel_collapsed_sampler_sa_cpp', PACKAGE = 'PerspectiveTopicModel', state, count_matrices, priors, constants, tau)
+}
+
 init_count_cpp <- function(state, constants) {
     .Call('_PerspectiveTopicModel_init_count_cpp', PACKAGE = 'PerspectiveTopicModel', state, constants)
 }
