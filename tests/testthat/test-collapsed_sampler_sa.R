@@ -69,3 +69,45 @@ test_that("collapsed_sampler_simulated_annealing", {
 })
 
 
+test_that("collapsed_sampler_simulated_annealing", {
+  N <- 1000
+  D <- 17
+  V <- 31
+  K <- 10
+  set.seed(4711)
+  state_df1 <- data.frame(doc = factor(sample(1:D, size = N, replace = TRUE)),
+                          type = factor(sample(1:V, size = N, replace = TRUE)),
+                          topic = sample(1:K, size = N, replace = TRUE))
+  set.seed(4711)
+  state_df2 <- data.frame(doc = factor(sample(1:D, size = N, replace = TRUE)),
+                          type = factor(sample(1:V, size = N, replace = TRUE)),
+                          topic = sample(1:K, size = N, replace = TRUE))
+  expect_identical(state_df1, state_df2)
+
+  constants <- list(D = length(unique(state_df1$doc)),
+                    V = length(unique(state_df1$type)),
+                    K = length(unique(state_df1$topic)),
+                    N = nrow(state_df1))
+
+  expect_silent(
+    stopifnot(constants$D == D,
+              constants$V == V,
+              constants$K == K,
+              constants$N == N)
+  )
+
+  priors <- list(alpha = 0.1,
+                 beta = 0.1)
+
+  mat1 <- init_count_matrices_lda(state = state_df1)
+  mat2 <- init_count_matrices_lda(state = state_df2)
+  expect_identical(mat1, mat2)
+
+  set.seed(4711)
+  x1 <- collapsed_sampler_sa_cpp(state = state_df1, count_matrices = mat1, priors, constants, 1)
+  set.seed(4711)
+  x2 <- collapsed_sampler_cpp(state = state_df2, count_matrices = mat2, priors, constants)
+  expect_identical(x1$state$topic, x2$state$topic)
+})
+
+
