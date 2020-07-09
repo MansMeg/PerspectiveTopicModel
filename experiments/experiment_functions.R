@@ -21,7 +21,7 @@ generate_experiment1_corpus <- function(m, init = "word3"){
 #' @description
 #' The corpus is generated based on m, then SA is run for N * C_kappa itreations.
 #' Then the full Gibbs sampler (tau = 1) for
-run_experiment1 <- function(experiment_jobs, result_file_name = NULL){
+run_experiment1 <- function(experiment_jobs, result_file_name){
   checkmate::assert_data_frame(experiment_jobs)
   checkmate::assert_names(names(experiment_jobs), must.include = c("m", "kappa", "C_kappa", "init", "seed", "alpha", "beta"))
   checkmate::assert_path_for_output(result_file_name, overwrite = TRUE)
