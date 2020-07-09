@@ -4,6 +4,6 @@ assert_lda_sa_parameters <- function(x){
   checkmate::assert_int(x$K)
   checkmate::assert_int(x$K)
   checkmate::assert_numeric(x$tau, lower = 0, upper = 1)
-  checkmate::assert_int(x$save_state_every, lower = 0)
+  checkmate::assert_int(x$save_state_every, lower = 0, null.ok = TRUE)
   checkmate::assert_flag(x$verbose)
 }
