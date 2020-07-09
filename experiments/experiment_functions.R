@@ -1,11 +1,18 @@
 #' Setup experiment 1 corpus
 #' @param m document size
-#' @param second_topic_word word to set as topic 2
-generate_experiment1_corpus <- function(m, second_topic_word = "word3"){
+#' @param init How to init the topic indicators.
+generate_experiment1_corpus <- function(m, init = "word3"){
+  checkmate::assert_number(m, lower = 1)
+  checkmate::assert_choice(init, choices = c("word1", "word2", "word3", "random"))
+
   state_df <- data.frame(doc = factor(c(rep("doc1", m), rep("doc2", m), rep("doc3", m))),
                          type = factor(c(rep("word1", 0.9*m), c(rep("word2", 0.1*m), rep("word2", m), rep("word3", m)))))
-  state_df$topic <- 1L
-  state_df$topic[state_df$type == second_topic_word] <- 2L
+  if(init == "random"){
+    state_df$topic <- sample(1:2, nrow(state_df), TRUE)
+  } else {
+    state_df$topic <- 1L
+    state_df$topic[state_df$type == init] <- 2L
+  }
   state_df
 }
 
@@ -16,7 +23,7 @@ generate_experiment1_corpus <- function(m, second_topic_word = "word3"){
 #' Then the full Gibbs sampler (tau = 1) for
 run_experiment1 <- function(experiment_jobs, result_file_name = NULL){
   checkmate::assert_data_frame(experiment_jobs)
-  checkmate::assert_names(names(experiment_jobs), must.include = c("m", "kappa", "C_kappa", "start_mode", "seed", "alpha", "beta"))
+  checkmate::assert_names(names(experiment_jobs), must.include = c("m", "kappa", "C_kappa", "init", "seed", "alpha", "beta"))
   checkmate::assert_path_for_output(result_file_name, overwrite = TRUE)
 
   if(!is.null(result_file_name) && file.exists(result_file_name)) {
@@ -26,7 +33,7 @@ run_experiment1 <- function(experiment_jobs, result_file_name = NULL){
   }
 
   # Setup experiment
-  crp <- generate_experiment1_corpus(experiment_jobs$m[1], as.character(experiment_jobs$start_mode[1]))
+  crp <- generate_experiment1_corpus(experiment_jobs$m[1], as.character(experiment_jobs$init[1]))
   N <- nrow(crp)
   experiment_jobs$tau <- experiment_jobs$kappa/N
   experiment_jobs$sa_iterations <- N * experiment_jobs$C_kappa
@@ -35,7 +42,7 @@ run_experiment1 <- function(experiment_jobs, result_file_name = NULL){
   results <- list()
   for(i in 1:nrow(experiment_jobs)){
     print(paste(Sys.time(), ":", i))
-    crp <- generate_experiment1_corpus(experiment_jobs$m[i], experiment_jobs$start_mode[i])
+    crp <- generate_experiment1_corpus(experiment_jobs$m[i], experiment_jobs$init[i])
     params <- list(K = 2,
                    tau = rep(experiment_jobs$tau[i], experiment_jobs$sa_iterations[i]),
                    save_state_every = NULL,
