@@ -24,12 +24,24 @@ priors2 <- list(alpha = 1, beta = 1)
 seed2 <- 4711:4720
 
 
+## Parameters Experiment 1.3
+m3 <- m
+D3 <- D
+kappa3 <- c(1200, 2^(2:10)) # 1200 will create tau = 1, hence ordinary gibbs sampling
+C_kappa3 <- c(100)
+init3 <- "word2"
+priors2 <- list(alpha = 1, beta = 1)
+seed3 <- 4711:4711
+
+
 
 ## Compute log marginal posterior
+# This is not the mode
 priors <- list(alpha = 1, beta = 1)
-s1 <- generate_experiment1_corpus(400, "word1")
+s1 <- generate_experiment1_corpus(400, "word1") # This not a mode.
 cm1 <- init_count_matrices_lda(s1)
 log_marginal_posterior_lda(cm1, priors)
+
 
 s2 <- generate_experiment1_corpus(400, "word2")
 cm2 <- init_count_matrices_lda(s2)
@@ -48,6 +60,19 @@ for(i in seq_along(random_lmp)){
 }
 mean(random_lmp)
 
+
+
+## Run experiment 3
+experiment_jobs3 <- expand.grid(m = m3,
+                                kappa = kappa3,
+                                C_kappa = C_kappa3,
+                                init = init3,
+                                alpha = alpha,
+                                beta = beta,
+                                seed = seed3,
+                                stringsAsFactors = FALSE)
+results <- run_experiment1(experiment_jobs = experiment_jobs3,
+                           "results_experiment1c.rda")
 
 
 ## Run experiment 2

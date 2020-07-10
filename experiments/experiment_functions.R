@@ -62,3 +62,36 @@ run_experiment1 <- function(experiment_jobs, result_file_name){
   list(results = results, experiment_jobs = experiment_jobs)
 }
 
+
+#' Setup a list with results as a ggplot2 data
+#'
+#' @param result a list with sa results
+#' @param experiment_jobs a dataframe with parameters per job
+#'
+setup_ggplot_data <- function(results, experiment_jobs){
+  checkmate::assert_list(results)
+  checkmate::assert_data_frame(experiment_jobs)
+  checkmate::assert_true(length(results) == nrow(experiment_jobs))
+
+  dfs <- list()
+  for (i in seq_along(results)) {
+    df <- combine_lmp(results[[i]])
+    dfs[[i]] <- suppressWarnings(cbind(df, experiment_jobs[i,]))
+  }
+  do.call(rbind, dfs)
+}
+
+#' Get the full LMP from a result list object (with SA and final)
+#'
+#' @param x a result object
+combine_lmp <- function(x){
+  checkmate::assert_list(x)
+  checkmate::assert_names(names(x), must.include = c("sa", "final"))
+  checkmate::assert_names(names(x$sa), must.include = c("lmp"))
+  checkmate::assert_names(names(x$final), must.include = c("lmp"))
+  checkmate::assert_true(x$sa$lmp[nrow(x$sa$lmp),]$log_post == x$final$lmp[1,]$log_post)
+
+  x$final$lmp$iteration <- x$final$lmp$iteration + x$sa$lmp$iteration[nrow(x$sa$lmp)]
+  lmp <- rbind(x$sa$lmp, x$final$lmp)
+  lmp
+}
