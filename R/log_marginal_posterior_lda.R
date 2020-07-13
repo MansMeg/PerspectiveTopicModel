@@ -7,7 +7,11 @@
 log_marginal_posterior_lda <- function(count_matrices, priors){
   assert_count_matrices(count_matrices)
   assert_lda_prior(priors)
+  log_marginal_posterior_lda_internal(count_matrices, priors)
+}
 
+#' For internal use (without assertions)
+log_marginal_posterior_lda_internal <- function(count_matrices, priors){
   K <- ncol(count_matrices$n_dk)
   V <- ncol(count_matrices$n_kv)
   D <- nrow(count_matrices$n_dk)

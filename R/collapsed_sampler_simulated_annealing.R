@@ -69,7 +69,7 @@ collapsed_sampler_simulated_annealing <- function(state, priors, params){
     results <- collapsed_sampler_sa_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants, tau = params$tau[step])
 
     if(step %% params$log_marginal_posterior_every == 0){
-      lp[lmp_idx] <- log_marginal_posterior_lda(results$count_matrices, priors)
+      lp[lmp_idx] <- log_marginal_posterior_lda_internal(results$count_matrices, priors)
       lmp_idx <- lmp_idx + 1L
     }
 
