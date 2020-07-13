@@ -63,11 +63,13 @@ collapsed_sampler_simulated_annealing <- function(state, priors, params){
     lmp[lmp_idx, 2] <- log_marginal_posterior_lda(results$count_matrices, priors)
     lmp_idx <- lmp_idx + 1L
   }
+  lp <- lmp$log_post
 
   for (step in (params$start_iter + 1):params$gibbs_iter){
     results <- collapsed_sampler_sa_cpp(state = results$state, count_matrices = results$count_matrices, priors = priors, constants = constants, tau = params$tau[step])
-    if(lmp[lmp_idx, 1] == step){
-      lmp[lmp_idx, 2] <- log_marginal_posterior_lda(results$count_matrices, priors)
+
+    if(step %% params$log_marginal_posterior_every == 0){
+      lp[lmp_idx] <- log_marginal_posterior_lda(results$count_matrices, priors)
       lmp_idx <- lmp_idx + 1L
     }
 
@@ -79,6 +81,9 @@ collapsed_sampler_simulated_annealing <- function(state, priors, params){
       save(state, priors, parameters, lmp, file = paste0(params$state_path, "_it", stringr::str_pad(step, nchar(params$gibbs_iter), pad = "0"), ".Rdata"))
     }
   }
+
+  # Store results
+  lmp$log_post <- lp
 
   # Cleanup final model
   results$tmp <- NULL
@@ -92,3 +97,5 @@ collapsed_sampler_simulated_annealing <- function(state, priors, params){
   class(results) <- "lda_topic_model"
   results
 }
+
+
