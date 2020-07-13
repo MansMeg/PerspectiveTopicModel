@@ -1,4 +1,5 @@
-# TODO: Profile
+# TODO: Profile code
+# TODO: Move everythin into subfolders in experiment
 
 # Experiment 1:
 # Will simulated annealing end up in a better mode?
@@ -34,6 +35,8 @@ priors2 <- list(alpha = 1, beta = 1)
 seed3 <- 4711:4711
 
 
+kappa4 <- c(1200, 2^(0:10))
+seed4 <- 4711:4720
 
 ## Compute log marginal posterior
 # This is not the mode
@@ -60,6 +63,32 @@ for(i in seq_along(random_lmp)){
 }
 mean(random_lmp)
 
+
+
+## Run experiment 5
+experiment_jobs5 <- expand.grid(m = 400,
+                                kappa = c(1200, 2^(0:6)),
+                                C_kappa = 25,
+                                init = "word2",
+                                alpha = 1,
+                                beta = 1,
+                                seed = 4711:5210,
+                                stringsAsFactors = FALSE)
+results <- run_experiment1(experiment_jobs = experiment_jobs5,
+                           result_file_name = "results_experiment1e.rda")
+
+
+## Run experiment 4
+experiment_jobs4 <- expand.grid(m = m3,
+                                kappa = kappa4,
+                                C_kappa = C_kappa3,
+                                init = init3,
+                                alpha = alpha,
+                                beta = beta,
+                                seed = seed4,
+                                stringsAsFactors = FALSE)
+results <- run_experiment1(experiment_jobs = experiment_jobs4,
+                           "results_experiment1d.rda")
 
 
 ## Run experiment 3
