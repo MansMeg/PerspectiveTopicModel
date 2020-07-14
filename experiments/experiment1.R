@@ -64,6 +64,17 @@ for(i in seq_along(random_lmp)){
 mean(random_lmp)
 
 
+## Run experiment 6
+experiment_jobs6 <- expand.grid(m = 400,
+                                kappa = c(1200),
+                                C_kappa = 25,
+                                init = "random",
+                                alpha = 1,
+                                beta = 1,
+                                seed = 4711:5710,
+                                stringsAsFactors = FALSE)
+results6 <- run_experiment1(experiment_jobs = experiment_jobs6,
+                            result_file_name = "results_experiment1f.rda")
 
 ## Run experiment 5
 experiment_jobs5 <- expand.grid(m = 400,
