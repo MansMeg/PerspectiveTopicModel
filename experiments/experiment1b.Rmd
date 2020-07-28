@@ -1,0 +1,46 @@
+---
+title: "Results 1b"
+#author: "Måns Magnusson"
+#date: '2020-07-09'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+load("../results_experiment1b.rda")
+source("experiment_functions.R")
+library(ggplot2)
+```
+
+## Random initialization
+
+```{r, fig.height=3.8, fig.width=7, echo=FALSE}
+idx <- c(1,2)
+for(i in 1:(length(results)/2)){
+  idx <- c(i*2 - 1, i*2)
+  ggd <- setup_ggplot_data(results[idx], experiment_jobs[idx,])
+  ggd$scheme <- "tau=1"
+  ggd$scheme[ggd$tau < 1] <- "tau=1/N"
+  
+  plt1 <- ggplot(data = ggd, aes(x = iteration, y = log_post, color = scheme)) + 
+    geom_hline(yintercept = -545.5614, lty = "dotted") + 
+    geom_hline(yintercept = -648.1314, lty = "dotted") +  
+    geom_hline(yintercept = -676.8834, lty = "dotted") +    
+    geom_hline(yintercept = -703.6333, lty = "dotted") +    
+    geom_line() + #  + ylim(-800, -500) 
+    ggtitle(paste0("Seed: ", ggd$seed[1]))
+  
+  
+  plt2 <- ggplot(data = ggd, aes(x = iteration, y = log_post, color = scheme)) + 
+    geom_hline(yintercept = -545.5614, lty = "dotted") + 
+    geom_hline(yintercept = -648.1314, lty = "dotted") +  
+    geom_hline(yintercept = -676.8834, lty = "dotted") +    
+    geom_hline(yintercept = -703.6333, lty = "dotted") +    
+    geom_line() + ylim(-800, -500)
+  suppressWarnings(print(plt1))
+  suppressWarnings(print(plt2))
+}
+
+```
+
+
