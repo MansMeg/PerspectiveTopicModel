@@ -1,9 +1,11 @@
 #' Setup experiment 1 corpus
 #' @param m document size
+#' @param ndoc the number of documents copies/duplicates
 #' @param init How to init the topic indicators.
-generate_experiment1_corpus <- function(m, init = "word3"){
+generate_experiment1_corpus <- function(m, init = "word3", ndoc = NULL){
   checkmate::assert_number(m, lower = 1)
   checkmate::assert_choice(init, choices = c("word1", "word2", "word3", "random"))
+  checkmate::assert_int(ndoc, lower = 1, upper = 10, null.ok = TRUE)
 
   state_df <- data.frame(doc = factor(c(rep("doc1", m), rep("doc2", m), rep("doc3", m))),
                          type = factor(c(rep("word1", 0.9*m), c(rep("word2", 0.1*m), rep("word2", m), rep("word3", m)))))
@@ -12,6 +14,9 @@ generate_experiment1_corpus <- function(m, init = "word3"){
   } else {
     state_df$topic <- 1L
     state_df$topic[state_df$type == init] <- 2L
+  }
+  if(!is.null(ndoc)){
+    state_df <- eval(parse(text = paste0("rbind(", paste(rep("state_df", ndoc), collapse = ", "), ")")))
   }
   state_df
 }
@@ -23,7 +28,9 @@ generate_experiment1_corpus <- function(m, init = "word3"){
 #' Then the full Gibbs sampler (tau = 1) for
 run_experiment1 <- function(experiment_jobs, result_file_name){
   checkmate::assert_data_frame(experiment_jobs)
-  checkmate::assert_names(names(experiment_jobs), must.include = c("m", "kappa", "C_kappa", "init", "seed", "alpha", "beta"))
+  must <- c("m", "kappa", "C_kappa", "init", "seed", "alpha", "beta")
+  can <- c("ndoc")
+  checkmate::assert_names(names(experiment_jobs), must.include = must, subset.of = c(must, can))
   checkmate::assert_path_for_output(result_file_name, overwrite = TRUE)
 
   if(!is.null(result_file_name) && file.exists(result_file_name)) {
@@ -33,7 +40,7 @@ run_experiment1 <- function(experiment_jobs, result_file_name){
   }
 
   # Setup experiment
-  crp <- generate_experiment1_corpus(experiment_jobs$m[1], as.character(experiment_jobs$init[1]))
+  crp <- generate_experiment1_corpus(m = experiment_jobs$m[1], init = as.character(experiment_jobs$init[1], ndoc = experiment_jobs$ndoc[1]))
   N <- nrow(crp)
   experiment_jobs$tau <- experiment_jobs$kappa/N
   experiment_jobs$sa_iterations <- N * experiment_jobs$C_kappa
@@ -42,7 +49,8 @@ run_experiment1 <- function(experiment_jobs, result_file_name){
   results <- list()
   for(i in 1:nrow(experiment_jobs)){
     print(paste(Sys.time(), ":", i))
-    crp <- generate_experiment1_corpus(experiment_jobs$m[i], experiment_jobs$init[i])
+    crp <- generate_experiment1_corpus(m = experiment_jobs$m[i], init = as.character(experiment_jobs$init[i], ndoc = experiment_jobs$ndoc[i]))
+
     params <- list(K = 2,
                    tau = rep(experiment_jobs$tau[i], experiment_jobs$sa_iterations[i]),
                    save_state_every = NULL,
