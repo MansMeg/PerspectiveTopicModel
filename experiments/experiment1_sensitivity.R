@@ -7,7 +7,7 @@ source("experiments/experiment_functions.R")
 
 ## Run experiment 1 sensitivity 1 (double sized corpus)
 experiment1sens1 <- expand.grid(m = 800,
-                                kappa = c(1200, 2^(0:6)),
+                                kappa = c(2400, 2^(0:6)),
                                 C_kappa = 25,
                                 init = "word2",
                                 alpha = 1,
@@ -20,7 +20,7 @@ results1 <- run_experiment1(experiment_jobs = experiment1sens1,
 ## Run experiment 1 sensitivity 2 (duplicate documents)
 experiment1sens2 <- expand.grid(m = 400,
                                 ndoc = 2,
-                                kappa = c(1200, 2^(0:6)),
+                                kappa = c(2400, 2^(0:6)),
                                 C_kappa = 25,
                                 init = "word2",
                                 alpha = 1,
