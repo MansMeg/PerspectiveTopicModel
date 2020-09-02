@@ -1,6 +1,6 @@
 #' Setup experiment 1 corpus
 #' @param m document size
-#' @param ndoc the number of documents copies/duplicates
+#' @param ndoc the number of documents copies/duplicates of the dataset
 #' @param init How to init the topic indicators.
 generate_experiment1_corpus <- function(m, init = "word3", ndoc = NULL){
   checkmate::assert_number(m, lower = 1)
@@ -40,7 +40,7 @@ run_experiment1 <- function(experiment_jobs, result_file_name){
   }
 
   # Setup experiment
-  crp <- generate_experiment1_corpus(m = experiment_jobs$m[1], init = as.character(experiment_jobs$init[1], ndoc = experiment_jobs$ndoc[1]))
+  crp <- generate_experiment1_corpus(m = experiment_jobs$m[1], init = as.character(experiment_jobs$init[1]), ndoc = experiment_jobs$ndoc[1])
   N <- nrow(crp)
   experiment_jobs$tau <- experiment_jobs$kappa/N
   experiment_jobs$sa_iterations <- N * experiment_jobs$C_kappa
@@ -49,7 +49,7 @@ run_experiment1 <- function(experiment_jobs, result_file_name){
   results <- list()
   for(i in 1:nrow(experiment_jobs)){
     print(paste(Sys.time(), ":", i))
-    crp <- generate_experiment1_corpus(m = experiment_jobs$m[i], init = as.character(experiment_jobs$init[i], ndoc = experiment_jobs$ndoc[i]))
+    crp <- generate_experiment1_corpus(m = experiment_jobs$m[i], init = as.character(experiment_jobs$init[i]), ndoc = experiment_jobs$ndoc[i])
 
     params <- list(K = 2,
                    tau = rep(experiment_jobs$tau[i], experiment_jobs$sa_iterations[i]),
