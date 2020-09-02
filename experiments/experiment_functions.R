@@ -85,13 +85,29 @@ setup_ggplot_data <- function(results, experiment_jobs){
 #'
 #' @param x a result object
 combine_lmp <- function(x){
+  assert_result_object(x)
+
+  x$final$lmp$iteration <- x$final$lmp$iteration + x$sa$lmp$iteration[nrow(x$sa$lmp)]
+  lmp <- rbind(x$sa$lmp, x$final$lmp)
+  lmp
+}
+
+#' Extract the maximum log marginal posterior value
+#'
+#' @param x a result object
+extract_max_log_marginal_posterior <- function(x){
+  m <- numeric(length(x))
+  for (i in seq_along(x)){
+    m[i] <- max(x[[i]]$final$lmp$log_post)
+  }
+  m
+}
+
+
+assert_result_object <- function(x){
   checkmate::assert_list(x)
   checkmate::assert_names(names(x), must.include = c("sa", "final"))
   checkmate::assert_names(names(x$sa), must.include = c("lmp"))
   checkmate::assert_names(names(x$final), must.include = c("lmp"))
   checkmate::assert_true(x$sa$lmp[nrow(x$sa$lmp),]$log_post == x$final$lmp[1,]$log_post)
-
-  x$final$lmp$iteration <- x$final$lmp$iteration + x$sa$lmp$iteration[nrow(x$sa$lmp)]
-  lmp <- rbind(x$sa$lmp, x$final$lmp)
-  lmp
 }
