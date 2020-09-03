@@ -35,15 +35,37 @@ crp3$doc <- as.factor(paste0(crp3$chapter))
 table(crp3$doc)
 
 
-experiment3 <- expand.grid(kappa = c(N, 2^(0:6)),
+experiment3random <- expand.grid(kappa = c(N, 2^(0:6)),
                            C_kappa = 5,
                            alpha = 1,
                            init = "random",
                            beta = 1,
                            seed = 4711:5210,
                            stringsAsFactors = FALSE)
+
+experiment3langinit <- experiment3random
+experiment3langinit$init <- "lang"
+
 results1 <- run_experiment3(txt = crp1,
-                            experiment_jobs = experiment3,
-                            result_file_name = "results3_crp1.rda")
+                            experiment_jobs = experiment3random,
+                            result_file_name = "results3random_crp1.rda")
 
+results2 <- run_experiment3(txt = crp1,
+                            experiment_jobs = experiment3langinit,
+                            result_file_name = "experiment3langinit_crp1.rda")
 
+results3 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3random,
+                            result_file_name = "results3random_crp2.rda")
+
+results4 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3langinit,
+                            result_file_name = "experiment3langinit_crp2.rda")
+
+results5 <- run_experiment3(txt = crp3,
+                            experiment_jobs = experiment3random,
+                            result_file_name = "results3random_crp2.rda")
+
+results6 <- run_experiment3(txt = crp3,
+                            experiment_jobs = experiment3langinit,
+                            result_file_name = "experiment3langinit_crp2.rda")
