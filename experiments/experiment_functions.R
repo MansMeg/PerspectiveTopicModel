@@ -119,3 +119,47 @@ assert_result_object <- function(x){
   checkmate::assert_names(names(x$final), must.include = c("lmp"))
   checkmate::assert_true(x$sa$lmp[nrow(x$sa$lmp),]$log_post == x$final$lmp[1,]$log_post)
 }
+
+
+#install.packages("stopwords")
+#library(stopwords)
+#stopwords("fr", "nltk")
+# txt <- readRDS(file = "experiments/data/three-men-all.rds")
+experiment2_corpus <- function(txt, rare_word_limit = 10, lang_first_words = c("en" = 142, "fr" = 22, "sv" = 28), remove_stopwords = "nltk"){
+  checkmate::assert_names(names(txt), must.include = c("line", "chapter", "text", "lang"))
+  # Remove it and chapter titles
+  txt <- txt[c(TRUE, !(txt$chapter[-length(txt$chapter)] != txt$chapter[-1])),]
+  txt <- txt[txt$chapter >= 1,]
+
+  txt <- tidytext::unnest_tokens(txt, word, text, token = "words", to_lower = TRUE)
+
+  # Remove stopwords here
+
+  txt <- dplyr::group_by(txt, lang, chapter)
+  txt <- dplyr::mutate(txt, chapter_word_no = dplyr::row_number())
+
+  en <- remove_rare_words(get_first_n_words_from_chapter(txt, "en", 142), rare_word_limit)
+  fr <- remove_rare_words(get_first_n_words_from_chapter(txt, "fr", 22), rare_word_limit)
+  sv <- remove_rare_words(get_first_n_words_from_chapter(txt, "sv", 28), rare_word_limit)
+}
+
+remove_rare_words <- function(txt, rare_word_limit){
+  checkmate::assert_names(names(txt), must.include = c("line", "chapter", "word", "lang"))
+  checkmate::assert_int(rare_word_limit, lower = 0)
+
+  txt <- dplyr::group_by(txt, word, lang)
+  wf <- dplyr::summarise(txt, n = n(), .groups = "keep")
+  txt <- dplyr::left_join(txt, wf, by = c("word", "lang"))
+  txt <- txt[txt$n >= rare_word_limit,]
+  txt$n <- NULL
+  txt
+}
+
+get_first_n_words_from_chapter <- function(txt, lang, n){
+  checkmate::assert_names(names(txt), must.include = c("line", "chapter", "word", "lang", "chapter_word_no"))
+  checkmate::assert_choice(lang, choices = unique(txt$lang))
+  checkmate::assert_int(n, lower = 1)
+  tmp <- txt[txt$lang == lang,]
+  tmp <- tmp[tmp$chapter_word_no <= n,]
+  tmp
+}
