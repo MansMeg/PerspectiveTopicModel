@@ -70,5 +70,31 @@ results6 <- run_experiment3(txt = crp3,
                             experiment_jobs = experiment3langinit,
                             result_file_name = "experiment3langinit_crp3.rda")
 
+# Experiment 3b ----
 
+experiment3b <- expand.grid(kappa = NA,
+                            C_kappa = 25,
+                            alpha = 1,
+                            init = "random",
+                            beta = 1,
+                            seed = 4711:4810,
+                            stringsAsFactors = FALSE)
 
+experiment3b$kappa <- 4999
+results7 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3b,
+                            result_file_name = "experiment3b4999.rda")
+experiment3b$kappa <- 1
+results8 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3b,
+                            result_file_name = "experiment3b1.rda")
+
+experiment3b$kappa <- 16
+results9 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3b,
+                            result_file_name = "experiment3b16.rda")
+
+experiment3b$kappa <- 256
+results10 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3b,
+                            result_file_name = "experiment3b256.rda")
