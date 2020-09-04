@@ -147,7 +147,7 @@ experiment3_corpus <- function(txt,
     # Remove stopwords here
     sw <- stopwords::stopwords(language = lang, source = remove_stopwords)
     if(lang == "fr") sw <- c(sw, "qu’il", "a", "c’est", "d’un")
-    swt <- tibble(word = sw)
+    swt <- dplyr::tibble(word = sw)
 
     tmp <- dplyr::anti_join(tmp, swt, by = "word")
 
@@ -165,7 +165,7 @@ remove_rare_words <- function(txt, rare_word_limit){
   checkmate::assert_int(rare_word_limit, lower = 0)
 
   txt <- dplyr::group_by(txt, word, lang)
-  wf <- dplyr::summarise(txt, n = n(), .groups = "keep")
+  wf <- dplyr::summarise(txt, n = dplyr::n(), .groups = "keep")
   txt <- dplyr::left_join(txt, wf, by = c("word", "lang"))
   txt <- txt[txt$n >= rare_word_limit,]
   txt$n <- NULL

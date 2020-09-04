@@ -12,7 +12,7 @@ crp <- experiment3_corpus(txt, c("en" = 1200, "fr" = 360, "sv" = 420), 10)
 names(crp)[4] <- "type"
 crp$type <- as.factor(crp$type)
 
-tab <- table(res$lang)
+tab <- table(crp$lang)
 tab;sum(tab)
 
 N <- nrow(crp)
@@ -40,7 +40,7 @@ experiment3random <- expand.grid(kappa = c(N, 2^(0:6)),
                            alpha = 1,
                            init = "random",
                            beta = 1,
-                           seed = 4711:5210,
+                           seed = 4711:4810,
                            stringsAsFactors = FALSE)
 
 experiment3langinit <- experiment3random
@@ -64,8 +64,11 @@ results4 <- run_experiment3(txt = crp2,
 
 results5 <- run_experiment3(txt = crp3,
                             experiment_jobs = experiment3random,
-                            result_file_name = "results3random_crp2.rda")
+                            result_file_name = "results3random_crp3.rda")
 
 results6 <- run_experiment3(txt = crp3,
                             experiment_jobs = experiment3langinit,
                             result_file_name = "experiment3langinit_crp2.rda")
+
+
+
