@@ -29,6 +29,10 @@ plt <- ggplot(data = experiment_jobs, aes(x = as.factor(kappa), fill = mode)) + 
 ggsave(filename = "kappa_experiments3_crp2.png", plot = plt, width = 5, height = 3)
 save(plt, experiment_jobs, file = "kappa_experiments3_crp2.rda")
 
+plt <- ggplot(data = experiment_jobs, aes(x = max_lmp)) + geom_histogram() + theme_bw() + xlab("Maximum Log Posterior Density") + ylab("Count") + scale_fill_grey()
+ggsave(filename = "mlpd_experiments3_crp2.png", plot = plt, width = 5, height = 3)
+save(plt, experiment_jobs, file = "mlpd_experiments3_crp2.rda")
+
 
 rm(list = ls())
 
