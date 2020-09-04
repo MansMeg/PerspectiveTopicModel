@@ -68,7 +68,7 @@ results5 <- run_experiment3(txt = crp3,
 
 results6 <- run_experiment3(txt = crp3,
                             experiment_jobs = experiment3langinit,
-                            result_file_name = "experiment3langinit_crp2.rda")
+                            result_file_name = "experiment3langinit_crp3.rda")
 
 
 
