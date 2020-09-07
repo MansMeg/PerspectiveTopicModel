@@ -209,12 +209,16 @@ run_experiment3 <- function(txt, experiment_jobs, result_file_name){
   results <- list()
   for(i in 1:nrow(experiment_jobs)){
     print(paste(Sys.time(), ":", i))
-    checkmate::assert_choice(experiment_jobs$init[i], choices = c("random", "lang"))
+    checkmate::assert_choice(experiment_jobs$init[i], choices = c("random", "lang", "sv+fr"))
     if(experiment_jobs$init[i] == "random"){
       crp$topic <- sample(1:3, N, TRUE)
     }
     if(experiment_jobs$init[i] == "lang"){
       crp$topic <- as.integer(as.factor(crp$lang))
+    }
+    if(experiment_jobs$init[i] == "sv+fr"){
+      crp$topic <- 3L
+      crp$topic[crp$lang == "en"] <- sample(1:2, N, TRUE)
     }
 
     params <- list(K = 3,

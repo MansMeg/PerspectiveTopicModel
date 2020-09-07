@@ -10,6 +10,9 @@ experiment_jobs$max_lmp <- extract_max_log_marginal_posterior(results)
 experiment_jobs$mode <- "-20400"
 experiment_jobs$mode[experiment_jobs$max_lmp > -19600] <- "-19400"
 
+# which(experiment_jobs$max_lmp < -19600)
+# results[[1]]$final$count_matrices
+
 plt <- ggplot(data = experiment_jobs, aes(x = as.factor(kappa), fill = mode)) + geom_bar(position = position_dodge(preserve = 'single')) + theme_bw() + xlab(expression(kappa)) + ylab("Count") + scale_fill_grey()
 ggsave(filename = "kappa_experiments3_crp1.png", plot = plt, width = 5, height = 3)
 save(plt, experiment_jobs, file = "kappa_experiments3_crp1.rda")

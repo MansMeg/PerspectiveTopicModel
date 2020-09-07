@@ -34,7 +34,34 @@ crp3 <- crp
 crp3$doc <- as.factor(paste0(crp3$chapter))
 table(crp3$doc)
 
+# Get LMP MC approximation
+priors <- list(alpha = 1, beta = 1)
+lpd_crp1 <- lpd_crp2 <- lpd_crp3 <- numeric(100)
+for(i in 1:length(lpd_crp1)){
+  crp1$topic <- sample(1:3, nrow(crp1), replace = TRUE)
+  crp2$topic <- sample(1:3, nrow(crp2), replace = TRUE)
+  crp3$topic <- sample(1:3, nrow(crp3), replace = TRUE)
+  cm1 <- init_count_matrices_lda(crp1)
+  cm2 <- init_count_matrices_lda(crp2)
+  cm3 <- init_count_matrices_lda(crp3)
+  lpd_crp1[i] <- log_marginal_posterior_lda(cm1, priors)
+  lpd_crp2[i] <- log_marginal_posterior_lda(cm2, priors)
+  lpd_crp3[i] <- log_marginal_posterior_lda(cm3, priors)
+}
+mean(lpd_crp1); mean(lpd_crp2); mean(lpd_crp3)
 
+# Init with language
+crp1$topic <- as.integer(as.factor(crp1$lang))
+crp2$topic <- as.integer(as.factor(crp2$lang))
+crp3$topic <- as.integer(as.factor(crp3$lang))
+cm1 <- init_count_matrices_lda(crp1)
+cm2 <- init_count_matrices_lda(crp2)
+cm3 <- init_count_matrices_lda(crp3)
+lpd_crp1 <- log_marginal_posterior_lda(cm1, priors)
+lpd_crp2 <- log_marginal_posterior_lda(cm2, priors)
+lpd_crp3 <- log_marginal_posterior_lda(cm3, priors)
+
+# Experiment 3a:
 experiment3random <- expand.grid(kappa = c(N, 2^(0:6)),
                            C_kappa = 5,
                            alpha = 1,
@@ -72,29 +99,18 @@ results6 <- run_experiment3(txt = crp3,
 
 # Experiment 3b ----
 
-experiment3b <- expand.grid(kappa = NA,
-                            C_kappa = 25,
-                            alpha = 1,
-                            init = "random",
-                            beta = 1,
-                            seed = 4711:4810,
-                            stringsAsFactors = FALSE)
+experiment3low_mode <- expand.grid(kappa = c(N, 2^(0:6)),
+                                   C_kappa = 5,
+                                   alpha = 1,
+                                   beta = 1,
+                                   init = "sv+fr",
+                                   seed = 4711:4810,
+                                   stringsAsFactors = FALSE)
 
-experiment3b$kappa <- 4999
-results7 <- run_experiment3(txt = crp2,
-                            experiment_jobs = experiment3b,
-                            result_file_name = "experiment3b4999.rda")
-experiment3b$kappa <- 1
-results8 <- run_experiment3(txt = crp2,
-                            experiment_jobs = experiment3b,
-                            result_file_name = "experiment3b1.rda")
+results1 <- run_experiment3(txt = crp1,
+                            experiment_jobs = experiment3random,
+                            result_file_name = "results3b_crp1.rda")
 
-experiment3b$kappa <- 16
-results9 <- run_experiment3(txt = crp2,
-                            experiment_jobs = experiment3b,
-                            result_file_name = "experiment3b16.rda")
-
-experiment3b$kappa <- 256
-results10 <- run_experiment3(txt = crp2,
-                            experiment_jobs = experiment3b,
-                            result_file_name = "experiment3b256.rda")
+results2 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3random,
+                            result_file_name = "results3b_crp2.rda")
