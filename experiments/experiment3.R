@@ -99,12 +99,12 @@ results6 <- run_experiment3(txt = crp3,
 
 # Experiment 3b ----
 
-experiment3low_mode <- expand.grid(kappa = c(N, 2^(0:6)),
+experiment3low_mode <- expand.grid(kappa = c(N, 2^(0:8)),
                                    C_kappa = 5,
                                    alpha = 1,
                                    beta = 1,
                                    init = "sv+fr",
-                                   seed = 4711:4810,
+                                   seed = 5711:5810,
                                    stringsAsFactors = FALSE)
 
 results1 <- run_experiment3(txt = crp1,
