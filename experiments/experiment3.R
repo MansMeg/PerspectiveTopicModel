@@ -108,9 +108,9 @@ experiment3low_mode <- expand.grid(kappa = c(N, 2^(0:6)),
                                    stringsAsFactors = FALSE)
 
 results1 <- run_experiment3(txt = crp1,
-                            experiment_jobs = experiment3random,
+                            experiment_jobs = experiment3low_mode,
                             result_file_name = "results3b_crp1.rda")
 
 results2 <- run_experiment3(txt = crp2,
-                            experiment_jobs = experiment3random,
+                            experiment_jobs = experiment3low_mode,
                             result_file_name = "results3b_crp2.rda")
