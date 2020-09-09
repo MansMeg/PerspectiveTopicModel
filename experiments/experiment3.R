@@ -114,3 +114,102 @@ results1 <- run_experiment3(txt = crp1,
 results2 <- run_experiment3(txt = crp2,
                             experiment_jobs = experiment3low_mode,
                             result_file_name = "results3b_crp2.rda")
+
+
+# Experiment 3c ----
+
+experiment3c1 <- expand.grid(kappa = c(128 + (0:8)*4),
+                             C_kappa = 5,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+experiment3c2 <- expand.grid(kappa = c(128 + (9:16)*4),
+                             C_kappa = 5,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+experiment3c3 <- expand.grid(kappa = c(128 + (17:24)*4),
+                             C_kappa = 5,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+experiment3c4 <- expand.grid(kappa = c(128 + (25:32)*4),
+                             C_kappa = 5,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+
+results1 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3c1,
+                            result_file_name = "results3c_crp2_1.rda")
+
+results2 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3c2,
+                            result_file_name = "results3c_crp2_2.rda")
+
+results3 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3c3,
+                            result_file_name = "results3c_crp2_3.rda")
+
+results4 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3c4,
+                            result_file_name = "results3c_crp2_4.rda")
+
+
+# Experiment 3d
+experiment3d1 <- expand.grid(kappa = c(160 + (0:1)*4),
+                             C_kappa = 25,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+experiment3d2 <- expand.grid(kappa = c(160 + (2:3)*4),
+                             C_kappa = 25,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+experiment3d3 <- expand.grid(kappa = c(160 + (4:5)*4),
+                             C_kappa = 25,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+experiment3d4 <- expand.grid(kappa = c(160 + (6:7)*4),
+                             C_kappa = 25,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+
+
+results1 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3d1,
+                            result_file_name = "results3d_crp2_1.rda")
+
+results2 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3d2,
+                            result_file_name = "results3d_crp2_2.rda")
+
+results3 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3d3,
+                            result_file_name = "results3d_crp2_3.rda")
+
+results4 <- run_experiment3(txt = crp2,
+                            experiment_jobs = experiment3d4,
+                            result_file_name = "results3d_crp2_4.rda")
+
+
+
