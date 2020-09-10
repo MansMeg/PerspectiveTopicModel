@@ -34,6 +34,24 @@ crp3 <- crp
 crp3$doc <- as.factor(paste0(crp3$chapter))
 table(crp3$doc)
 
+# Double sized en
+crp4 <- crp
+crp4$chapter[crp4$chapter <= 10 & crp4$lang != "en"] <- 1
+crp4$chapter[crp4$chapter > 10 & crp4$lang != "en"] <- 2
+docs <- c(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10)
+for(i in seq_along(docs)) crp4$chapter[crp4$lang == "en" & crp4$chapter == i ] <- docs[i]
+crp4$doc <- as.factor(paste0(crp4$lang, crp4$chapter))
+table(crp4$doc)
+
+crp5 <- crp
+crp5$chapter[crp5$chapter <= 10 & crp5$lang != "en"] <- 1
+crp5$chapter[crp5$chapter > 10 & crp5$lang != "en"] <- 2
+docs <- c(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5)
+for(i in seq_along(docs)) crp5$chapter[crp5$lang == "en" & crp5$chapter == i ] <- docs[i]
+crp5$doc <- as.factor(paste0(crp5$lang, crp5$chapter))
+table(crp5$doc)
+
+
 # Get LMP MC approximation
 priors <- list(alpha = 1, beta = 1)
 lpd_crp1 <- lpd_crp2 <- lpd_crp3 <- numeric(100)
@@ -210,6 +228,42 @@ results3 <- run_experiment3(txt = crp2,
 results4 <- run_experiment3(txt = crp2,
                             experiment_jobs = experiment3d4,
                             result_file_name = "results3d_crp2_4.rda")
+
+
+
+# Experiment 3e
+experiment3e1 <- expand.grid(kappa = c(N, 2^(4:8), 96, 120),
+                             C_kappa = 5,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+experiment3e2 <- expand.grid(kappa = c(128 + (1:8)*8),
+                             C_kappa = 5,
+                             alpha = 1,
+                             beta = 1,
+                             init = "sv+fr",
+                             seed = 4711:4810,
+                             stringsAsFactors = FALSE)
+
+
+results1 <- run_experiment3(txt = crp4,
+                            experiment_jobs = experiment3e1,
+                            result_file_name = "experiment3e1_crp4_1.rda")
+
+results2 <- run_experiment3(txt = crp4,
+                            experiment_jobs = experiment3e2,
+                            result_file_name = "experiment3e1_crp4_2.rda")
+
+results3 <- run_experiment3(txt = crp5,
+                            experiment_jobs = experiment3e1,
+                            result_file_name = "experiment3e1_crp5_1.rda")
+
+results4 <- run_experiment3(txt = crp5,
+                            experiment_jobs = experiment3e2,
+                            result_file_name = "experiment3e1_crp5_2.rda")
+
 
 
 
