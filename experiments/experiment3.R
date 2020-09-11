@@ -264,6 +264,24 @@ results4 <- run_experiment3(txt = crp5,
                             experiment_jobs = experiment3e2,
                             result_file_name = "experiment3e1_crp5_2.rda")
 
+# Experiment 3f (final)
+experiment3f <- expand.grid(kappa = c(N, 100 + (0:10)*10),
+                            C_kappa = 5,
+                            alpha = 1,
+                            beta = 1,
+                            init = "sv+fr",
+                            seed = 4711:5210,
+                            stringsAsFactors = FALSE)
 
+results1 <- run_experiment3(txt = crp1,
+                            experiment_jobs = experiment3f,
+                            result_file_name = "experiment3f_crp1.rda")
 
+results2 <- run_experiment3(txt = crp4,
+                            experiment_jobs = experiment3f,
+                            result_file_name = "experiment3f_crp4.rda")
+
+results3 <- run_experiment3(txt = crp5,
+                            experiment_jobs = experiment3f,
+                            result_file_name = "experiment3f_crp5.rda")
 

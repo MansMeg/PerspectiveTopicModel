@@ -74,13 +74,14 @@ run_experiment1 <- function(experiment_jobs, result_file_name){
 #' @param experiment_jobs a dataframe with parameters per job
 #'
 setup_ggplot_data <- function(results, experiment_jobs){
+  # results <- results[idx], experiment_jobs <- experiment_jobs[idx, c("C_kappa", "kappa")]
   checkmate::assert_list(results)
   checkmate::assert_data_frame(experiment_jobs)
   checkmate::assert_true(length(results) == nrow(experiment_jobs))
 
   dfs <- list()
   for (i in seq_along(results)) {
-    df <- combine_lmp(results[[i]])
+    df <- combine_lmp(x = results[[i]])
     dfs[[i]] <- suppressWarnings(cbind(df, experiment_jobs[i,]))
   }
   do.call(rbind, dfs)
@@ -218,7 +219,8 @@ run_experiment3 <- function(txt, experiment_jobs, result_file_name){
     }
     if(experiment_jobs$init[i] == "sv+fr"){
       crp$topic <- 3L
-      crp$topic[crp$lang == "en"] <- sample(1:2, N, TRUE)
+      is_en <- crp$lang == "en"
+      crp$topic[is_en] <- sample(1:2, sum(is_en), TRUE)
     }
 
     params <- list(K = 3,
@@ -230,9 +232,14 @@ run_experiment3 <- function(txt, experiment_jobs, result_file_name){
     priors <- list(alpha = experiment_jobs$alpha[i], beta = experiment_jobs$beta[i])
     # Run SA
     res_sa <- collapsed_sampler_simulated_annealing(state = crp, priors = priors, params)
+    last_lmp <- log_marginal_posterior_lda(count_matrices = res_sa$count_matrices, priors)
+
     # Run final N iterations with tau = 1
     params$tau <- rep(1, N)
     res_final <- collapsed_sampler_simulated_annealing(state = res_sa$state, priors, params)
+
+    checkmate::assert_true(round(res_final$lmp$log_post[1]) == round(last_lmp))
+
     results[[i]] <- list(sa = res_sa, final = res_final)
   }
   save(results, experiment_jobs, file = result_file_name)
